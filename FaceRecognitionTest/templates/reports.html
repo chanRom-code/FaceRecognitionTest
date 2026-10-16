@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Attendance Reports</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+      .sidebar-sub-menu {
+          display: none;
+          list-style: none;
+          padding-left: 15px;
+          margin-top: 5px;
+          margin-bottom: 10px;
+          background: rgba(0, 0, 0, 0.1);
+          border-radius: 8px;
+      }
+      .sidebar-sub-menu li a {
+          padding: 10px 15px;
+          font-size: 0.9rem;
+          color: #ecf0f1;
+          display: block;
+          border-radius: 6px;
+          transition: 0.2s;
+          text-decoration: none;
+      }
+      .sidebar-sub-menu li a:hover {
+          background: rgba(255, 255, 255, 0.2);
+      }
+      .dropdown-icon {
+          transition: transform 0.3s ease;
+      }
+      .dropdown-icon.rotate {
+          transform: rotate(180deg);
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <div class="sidebar">
+      <div>
+
+        <div class="logo-section">
+          <img src="{{ url_for('static', filename='SFICS-LOGO.PNG') }}">
+          <h2 class="school-name">SAINT FRANCIS INSTITUTE OF COMPUTER STUDIES</h2>
+          <p>ATTENDANCE SYSTEM</p>
+        </div>
+
+        <div class="user-info">
+          <p><i class="fas fa-user-circle"></i> Logged in as</p>
+          <strong>{{ session.get('username', 'Admin') }}</strong>
+        </div>
+
+        <ul class="menu">
+          <li>
+            <a href="/">
+              <i class="fas fa-chart-line"></i> Dashboard
+            </a>
+          </li>
+
+          <li>
+            <a href="#" onclick="toggleStudentsMenu(event)">
+              <i class="fas fa-users"></i> Students
+              <i class="fas fa-chevron-down dropdown-icon" id="studentsArrow" style="float: right; margin-top: 4px;"></i>
+            </a>
+            <ul class="sidebar-sub-menu" id="studentsSubMenu">
+              <li><a href="/students?tab=list"><i class="fas fa-list"></i> Student List</a></li>
+              <li><a href="/students?tab=add"><i class="fas fa-user-plus"></i> Add New Student</a></li>
+              <li><a href="/students?tab=face"><i class="fas fa-camera"></i> Face Registration</a></li>
+            </ul>
+          </li>
+
+          <li>
+            <a href="/reports" class="active">
+              <i class="fas fa-file-alt"></i> Reports
+            </a>
+          </li>
+
+          <li>
+            <a href="/settings">
+              <i class="fas fa-cog"></i> Settings
+            </a>
+          </li>
+        </ul>
+
+      </div>
+
+      <div class="logout-container">
+        <a href="/logout" class="logout-btn">
+          <i class="fas fa-right-from-bracket"></i> Logout
+        </a>
+      </div>
+    </div>
+
+    <div class="reports-bg">
+    <div class="main-content reports-page">
+  <div class="reports-card glass">
+    <h1 class="reports-title">Attendance Analytics</h1>
+
+      <div class="report-filter">
+    <i class="fas fa-calendar-alt"></i>
+    <input type="date" id="dateFilter">
+</div>
+
+    <div class="report-cards">
+        <div class="report-box total-box">
+            <div class="box-content">
+                <i class="fas fa-database"></i>
+                <div>
+                    <h3>Total Records</h3>
+                    <p>{{ total }}</p>
+                </div>
+            </div>
+            <div class="progress-bar"><div class="fill" style="width: 100%"></div></div>
+        </div>
+
+        <div class="report-box present-box">
+            <div class="box-content">
+                <i class="fas fa-check-circle"></i>
+                <div>
+                    <h3>Present</h3>
+                    <p>{{ present }}</p>
+                </div>
+            </div>
+            <div class="progress-bar"><div class="fill" style="width: {{ (present/total*100) if total > 0 else 0 }}%"></div></div>
+        </div>
+
+        <div class="report-box late-box">
+            <div class="box-content">
+                <i class="fas fa-clock"></i>
+                <div>
+                    <h3>Late</h3>
+                    <p>{{ late }}</p>
+                </div>
+            </div>
+            <div class="progress-bar"><div class="fill" style="width: {{ (late/total*100) if total > 0 else 0 }}%"></div></div>
+        </div>
+
+        <div class="report-box absent-box">
+            <div class="box-content">
+                <i class="fas fa-user-times"></i>
+                <div>
+                    <h3>Absent</h3>
+                    <p>{{ absent }}</p>
+                </div>
+            </div>
+            <div class="progress-bar"><div class="fill" style="width: {{ (absent/total*100) if total > 0 else 0 }}%"></div></div>
+        </div>
+    </div>
+
+    </div>
+
+          <div class="report-details">
+
+              <div class="report-table-section">
+
+    <h2 class="table-title">
+        <i class="fas fa-list"></i> Attendance Records
+    </h2>
+
+    <div class="table-wrapper">
+        <table class="modern-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Course</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in records %}
+                <tr>
+                    <td>{{ r.student_id }}</td>
+                    <td>{{ r.name }}</td>
+                    <td>{{ r.course }}</td>
+                    <td>{{ r.date }}</td>
+                    <td>{{ r.time }}</td>
+                    <td>
+                        <span class="badge
+                            {% if r.status == 'Present' %}present
+                            {% elif r.status == 'Late' %}late
+                            {% elif r.status == 'Absent' %}absent
+                            {% else %}neutral{% endif %}">
+                            {{ r.status }}
+                        </span>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+            <div class="details-grid">
+
+  <div class="detail-box">
+    <h4>Attendance Percentage</h4>
+    {% if total > 0 %}
+      <p class="big-text">{{ ((present / total) * 100) | round(1) }}%</p>
+      <span class="sub-text">Present Rate</span>
+    {% else %}
+      <p class="big-text">0%</p>
+    {% endif %}
+  </div>
+
+  <div class="detail-box">
+    <h4>Status Breakdown</h4>
+    <p>🟢 Present: {{ present }}</p>
+    <p>🟡 Late: {{ late }}</p>
+    <p>🔴 Absent: {{ total - (present + late) }}</p>
+  </div>
+
+  <div class="detail-box">
+    <h4>System Status</h4>
+    <p>🟢 Database Connected</p>
+    <p>🟢 Realtime Active</p>
+  </div>
+
+</div>
+
+  <script>
+    // SIDEBAR DROPDOWN TOGGLE SCRIPT
+    function toggleStudentsMenu(event) {
+        event.preventDefault();
+        const menu = document.getElementById('studentsSubMenu');
+        const arrow = document.getElementById('studentsArrow');
+
+        if (menu.style.display === "block") {
+            menu.style.display = "none";
+            arrow.classList.remove('rotate');
+        } else {
+            menu.style.display = "block";
+            arrow.classList.add('rotate');
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const dateInput = document.getElementById("dateFilter");
+        const params = new URLSearchParams(window.location.search);
+        const selectedDate = params.get("date");
+
+        if (selectedDate) {
+            dateInput.value = selectedDate;
+        } else {
+            // LOCAL DATE FIX (No UTC issue)
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+
+            const localDate = `${year}-${month}-${day}`;
+            dateInput.value = localDate;
+        }
+
+        dateInput.addEventListener("change", function() {
+            window.location.href = "/reports?date=" + this.value;
+        });
+    });
+  </script>
+  </body>
+</html>

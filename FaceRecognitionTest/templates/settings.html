@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Settings</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+      .sidebar-sub-menu {
+          display: none;
+          list-style: none;
+          padding-left: 15px;
+          margin-top: 5px;
+          margin-bottom: 10px;
+          background: rgba(0, 0, 0, 0.1);
+          border-radius: 8px;
+      }
+      .sidebar-sub-menu li a {
+          padding: 10px 15px;
+          font-size: 0.9rem;
+          color: #ecf0f1;
+          display: block;
+          border-radius: 6px;
+          transition: 0.2s;
+          text-decoration: none;
+      }
+      .sidebar-sub-menu li a:hover {
+          background: rgba(255, 255, 255, 0.2);
+      }
+      .dropdown-icon {
+          transition: transform 0.3s ease;
+      }
+      .dropdown-icon.rotate {
+          transform: rotate(180deg);
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <div class="sidebar">
+      <div>
+
+        <div class="logo-section">
+          <img src="{{ url_for('static', filename='SFICS-LOGO.PNG') }}">
+          <h2 class="school-name">SAINT FRANCIS INSTITUTE OF COMPUTER STUDIES</h2>
+          <p>ATTENDANCE SYSTEM</p>
+        </div>
+
+        <div class="user-info">
+          <p><i class="fas fa-user-circle"></i> Logged in as</p>
+          <strong>{{ session.get('username', 'Admin') }}</strong>
+        </div>
+
+        <ul class="menu">
+          <li>
+            <a href="/">
+              <i class="fas fa-chart-line"></i> Dashboard
+            </a>
+          </li>
+
+          <li>
+            <a href="#" onclick="toggleStudentsMenu(event)">
+              <i class="fas fa-users"></i> Students
+              <i class="fas fa-chevron-down dropdown-icon" id="studentsArrow" style="float: right; margin-top: 4px;"></i>
+            </a>
+            <ul class="sidebar-sub-menu" id="studentsSubMenu">
+              <li><a href="/students?tab=list"><i class="fas fa-list"></i> Student List</a></li>
+              <li><a href="/students?tab=add"><i class="fas fa-user-plus"></i> Add New Student</a></li>
+              <li><a href="/students?tab=face"><i class="fas fa-camera"></i> Face Registration</a></li>
+            </ul>
+          </li>
+
+          <li>
+            <a href="/reports">
+              <i class="fas fa-file-alt"></i> Reports
+            </a>
+          </li>
+
+          <li>
+            <a href="/settings" class="active">
+              <i class="fas fa-cog"></i> Settings
+            </a>
+          </li>
+        </ul>
+
+      </div>
+
+      <div class="logout-container">
+        <a href="/logout" class="logout-btn">
+          <i class="fas fa-right-from-bracket"></i> Logout
+        </a>
+      </div>
+    </div>
+
+    <div class="main-content">
+    <div class="students-card glass settings-container">
+        <div class="settings-header">
+            <h1 class="students-title"><i class="fas fa-cog fa-spin"></i> System Settings</h1>
+            <p class="settings-subtitle">Manage your SFICS Attendance System configurations and monitoring.</p>
+        </div>
+
+        <div class="settings-grid">
+            <div class="settings-tile">
+                <div class="tile-icon"><i class="fas fa-info-circle"></i></div>
+                <div class="tile-content">
+                    <h3>System Information</h3>
+                    <div class="info-row"><span>Version:</span> <strong>v1.2.0 (Stable)</strong></div>
+                    <div class="info-row"><span>Developer:</span> <strong>SFICS IT Dept.</strong></div>
+                    <div class="info-row"><span>Last Update:</span> <strong>May 2026</strong></div>
+                </div>
+            </div>
+
+            <div class="settings-tile">
+                <div class="tile-icon"><i class="fas fa-server"></i></div>
+                <div class="tile-content">
+                    <h3>Database Status</h3>
+                    <div class="status-indicator">
+                        <span class="pulse-dot"></span> Connected to MySQL
+                    </div>
+                    <p class="tile-text">Host: localhost | DB: face_attendance</p>
+                    <button class="settings-btn mini"><i class="fas fa-sync"></i> Test Connection</button>
+                </div>
+            </div>
+
+            <div class="settings-tile">
+                <div class="tile-icon"><i class="fas fa-camera-retro"></i></div>
+                <div class="tile-content">
+                    <h3>Camera Configuration</h3>
+                    <div class="info-row"><span>Default Source:</span> <strong>Webcam (0)</strong></div>
+                    <div class="info-row"><span>Resolution:</span> <strong>640x480</strong></div>
+                    <button class="settings-btn mini-warning"><i class="fas fa-video-slash"></i> Reset Camera</button>
+                </div>
+            </div>
+
+            <div class="settings-tile">
+                <div class="tile-icon"><i class="fas fa-bolt"></i></div>
+                <div class="tile-content">
+                    <h3>Quick Actions</h3>
+                    <div class="action-list">
+                        <button class="settings-btn-outline" onclick="Swal.fire('Processing', 'Enforcing Full Re-Encoding...', 'info')">
+                            <i class="fas fa-fingerprint"></i> Force Re-Encode All
+                        </button>
+                        <button class="settings-btn-outline" onclick="window.print()">
+                            <i class="fas fa-print"></i> Print System Log
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="settings-footer">
+            <p><i class="fas fa-shield-alt"></i> SFICS Secured Recognition Engine &copy; 2026</p>
+        </div>
+    </div>
+    </div>
+
+    <script>
+      function toggleStudentsMenu(event) {
+          event.preventDefault();
+          const menu = document.getElementById('studentsSubMenu');
+          const arrow = document.getElementById('studentsArrow');
+
+          if (menu.style.display === "block") {
+              menu.style.display = "none";
+              arrow.classList.remove('rotate');
+          } else {
+              menu.style.display = "block";
+              arrow.classList.add('rotate');
+          }
+      }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  </body>
+</html>

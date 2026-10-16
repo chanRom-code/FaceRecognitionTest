@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SFICS Admin Dashboard</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+      .sidebar-sub-menu {
+          display: none;
+          list-style: none;
+          padding-left: 15px;
+          margin-top: 5px;
+          margin-bottom: 10px;
+          background: rgba(0, 0, 0, 0.1);
+          border-radius: 8px;
+      }
+      .sidebar-sub-menu li a {
+          padding: 10px 15px;
+          font-size: 0.9rem;
+          color: #ecf0f1;
+          display: block;
+          border-radius: 6px;
+          transition: 0.2s;
+          text-decoration: none;
+      }
+      .sidebar-sub-menu li a:hover {
+          background: rgba(255, 255, 255, 0.2);
+      }
+      .dropdown-icon {
+          transition: transform 0.3s ease;
+      }
+      .dropdown-icon.rotate {
+          transform: rotate(180deg);
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <div class="sidebar">
+      <div>
+
+        <div class="logo-section">
+          <img src="{{ url_for('static', filename='SFICS-LOGO.PNG') }}">
+          <h2 class="school-name">SAINT FRANCIS INSTITUTE OF COMPUTER STUDIES</h2>
+          <p>ATTENDANCE SYSTEM</p>
+        </div>
+
+        <div class="user-info">
+          <p><i class="fas fa-user-circle"></i> Logged in as</p>
+          <strong>{{ session.get('username', 'Admin') }}</strong>
+        </div>
+
+        <ul class="menu">
+          <li>
+            <a href="/">
+              <i class="fas fa-chart-line"></i> Dashboard
+            </a>
+          </li>
+
+          <li>
+            <a href="#" onclick="toggleStudentsMenu(event)">
+              <i class="fas fa-users"></i> Students
+              <i class="fas fa-chevron-down dropdown-icon" id="studentsArrow" style="float: right; margin-top: 4px;"></i>
+            </a>
+            <ul class="sidebar-sub-menu" id="studentsSubMenu">
+              <li><a href="/students?tab=list"><i class="fas fa-list"></i> Student List</a></li>
+              <li><a href="/students?tab=add"><i class="fas fa-user-plus"></i> Add New Student</a></li>
+              <li><a href="/students?tab=face"><i class="fas fa-camera"></i> Face Registration</a></li>
+            </ul>
+          </li>
+
+          <li>
+            <a href="/reports">
+              <i class="fas fa-file-alt"></i> Reports
+            </a>
+          </li>
+
+          <li>
+            <a href="/settings">
+              <i class="fas fa-cog"></i> Settings
+            </a>
+          </li>
+        </ul>
+
+      </div>
+
+      <div class="logout-container">
+        <a href="/logout" class="logout-btn">
+            <i class="fas fa-right-from-bracket"></i> Logout
+        </a>
+      </div>
+    </div>
+
+<div class="main-content">
+    <div class="topbar">
+        <div class="welcome-text">
+            <h1>Attendance Dashboard</h1>
+            <p>Welcome back, Admin! Here's the summary for today.</p>
+        </div>
+
+        <div id="clock" class="digital-clock"></div>
+    </div>
+
+    <div class="cards-container">
+        <div class="stat-card total">
+            <div class="card-icon"><i class="fas fa-users"></i></div>
+            <div class="card-info">
+                <h3>Total Records</h3>
+                <p id="totalCount">0</p>
+            </div>
+        </div>
+
+        <div class="stat-card present">
+            <div class="card-icon"><i class="fas fa-check-circle"></i></div>
+            <div class="card-info">
+                <h3>Present</h3>
+                <p id="presentCount">0</p>
+            </div>
+        </div>
+
+        <div class="stat-card late">
+            <div class="card-icon"><i class="fas fa-clock"></i></div>
+            <div class="card-info">
+                <h3>Late</h3>
+                <p id="lateCount">0</p>
+            </div>
+        </div>
+
+        <div class="stat-card absent">
+            <div class="card-icon"><i class="fas fa-user-times"></i></div>
+            <div class="card-info">
+                <h3>Absent</h3>
+                <p id="absentCount">0</p>
+            </div>
+        </div>
+    </div>
+
+  <div class="camera-control-bar">
+    <span><i class="fas fa-video"></i> Facial Recognition Status</span>
+
+    <div class="btn-group">
+        <a href="{{ url_for('start_facial') }}" class="btn-start">
+            <i class="fas fa-play"></i> Start Attendance
+        </a>
+
+        <a href="{{ url_for('stop_facial') }}" class="btn-stop">
+            <i class="fas fa-stop"></i> Stop
+        </a>
+    </div>
+</div>
+
+    <div class="table-section glass-panel">
+        <div class="table-header">
+            <h2>Recent Attendance</h2>
+            <div class="table-tools">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search student...">
+                </div>
+                <div class="date-box">
+                    <i class="fas fa-calendar-alt"></i>
+                    <input type="date" id="dateFilter">
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Student Name</th>
+                        <th>Course</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="attendanceBody">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+    <script>
+      // SIDEBAR DROPDOWN TOGGLE SCRIPT
+      function toggleStudentsMenu(event) {
+          event.preventDefault();
+          const menu = document.getElementById('studentsSubMenu');
+          const arrow = document.getElementById('studentsArrow');
+
+          if (menu.style.display === "block") {
+              menu.style.display = "none";
+              arrow.classList.remove('rotate');
+          } else {
+              menu.style.display = "block";
+              arrow.classList.add('rotate');
+          }
+      }
+
+      // Auto select today's date
+      document.addEventListener("DOMContentLoaded", function() {
+          document.getElementById("dateFilter").valueAsDate = new Date();
+      });
+
+      // Auto select today's LOCAL date
+      function getLocalDate() {
+          const now = new Date();
+          const year = now.getFullYear();
+          const month = String(now.getMonth() + 1).padStart(2, '0');
+          const day = String(now.getDate()).padStart(2, '0');
+          return `${year}-${month}-${day}`;
+      }
+
+      document.addEventListener("DOMContentLoaded", function() {
+          document.getElementById("dateFilter").value = getLocalDate();
+          loadAttendance();
+      });
+
+      // Auto update every 1 minute
+      setInterval(() => {
+          const today = getLocalDate();
+          const currentValue = document.getElementById("dateFilter").value;
+
+          if (currentValue !== today) {
+              document.getElementById("dateFilter").value = today;
+              loadAttendance();
+          }
+      }, 60000);
+
+      async function loadAttendance() {
+          try {
+              let selectedDate = document.getElementById("dateFilter").value;
+              let url = "/api/attendance";
+              if (selectedDate) { url += "?date=" + selectedDate; }
+
+              const response = await fetch(url);
+              const data = await response.json();
+
+              const tbody = document.getElementById("attendanceBody");
+              tbody.innerHTML = "";
+
+              // Counters initialization
+              let present = 0;
+              let late = 0;
+              let absent = 0;
+              let total = 0;
+
+              data.forEach(record => {
+                  let status = record.status.trim().toLowerCase();
+
+                  if (status === "present") {
+                      present++;
+                      total++;
+                  }
+                  else if (status === "late") {
+                      late++;
+                      total++;
+                  }
+                  else if (status === "absent") {
+                      absent++;
+                      total++;
+                  }
+
+                  const row = document.createElement("tr");
+                  row.innerHTML = `
+                      <td>${record.student_id}</td>
+                      <td>${record.name}</td>
+                      <td>${record.course}</td>
+                      <td>${record.date}</td>
+                      <td>${record.time}</td>
+                      <td>
+                          <span class="badge ${status}">
+                              ${record.status}
+                          </span>
+                      </td>
+                  `;
+                  tbody.appendChild(row);
+              });
+
+              // Update the UI Counters
+              document.getElementById("totalCount").innerText = total;
+              document.getElementById("presentCount").innerText = present;
+              document.getElementById("lateCount").innerText = late;
+              document.getElementById("absentCount").innerText = absent;
+
+          } catch (error) {
+              console.error("Error loading attendance:", error);
+          }
+      }
+
+      setInterval(loadAttendance, 2000);
+      loadAttendance();
+
+      function updateClock() {
+          const now = new Date();
+          const options = {
+              weekday: 'long',
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit',
+              second: '2-digit'
+          };
+          document.getElementById('clock').innerText = now.toLocaleDateString('en-US', options);
+      }
+      setInterval(updateClock, 1000);
+      updateClock();
+
+    </script>
+  </body>
+</html>

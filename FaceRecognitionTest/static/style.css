@@ -1,0 +1,3066 @@
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', sans-serif;
+        background: #f4f6f9;
+    }
+
+    /* ===== SIDEBAR ===== */
+    .sidebar {
+        width: 260px;
+        height: 100vh;
+        position: fixed;
+        background: linear-gradient(180deg, #0f4c2f, #1fa463, #0b3d25);
+        background-size: 200% 200%;
+        animation: gradientMove 6s ease infinite;
+        color: white;
+        padding: 30px 20px;
+        box-shadow: 4px 0 15px rgba(0,0,0,0.2);
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; /* 🔥 para nasa bottom logout */
+    }
+
+    @keyframes gradientMove {
+        0% {background-position: 0% 0%;}
+        50% {background-position: 100% 100%;}
+        100% {background-position: 0% 0%;}
+    }
+
+    .logo-section {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .logo-section img {
+        width: 95px;
+        border-radius: 50%;
+        box-shadow: 0 0 20px rgba(255,255,255,0.3);
+    }
+
+    .logo-section h2 {
+        margin: 10px 0 0;
+        font-weight: 600;
+    }
+
+    .logo-section p {
+        font-size: 13px;
+        opacity: 0.8;
+    }
+
+    /* ===== MENU ===== */
+    .menu {
+        list-style: none;
+        padding: 0;
+    }
+
+    .menu li {
+        margin-bottom: 12px;
+    }
+
+    .menu a {
+        text-decoration: none;
+        color: white;
+        display: block;
+        padding: 12px 15px;
+        border-radius: 10px;
+        transition: 0.3s;
+        font-weight: 500;
+    }
+
+    .menu a:hover {
+        background: rgba(255,255,255,0.15);
+        transform: translateX(6px);
+    }
+
+    .menu a.active {
+        background: rgba(255,255,255,0.25);
+    }
+
+    /* ===== MAIN CONTENT ===== */
+    .main-content {
+        margin-left: 280px;
+        padding: 40px;
+    }
+
+    /* ===== TOPBAR ===== */
+    .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .topbar h1 {
+        font-weight: 600;
+    }
+
+    /* ===== CARDS ===== */
+    .cards {
+        display: flex;
+        gap: 20px;
+        margin: 30px 0;
+    }
+
+    .card {
+        flex: 1;
+        padding: 25px;
+        border-radius: 15px;
+        background: white;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+        transition: 0.3s;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    .card.present {
+        border-left: 6px solid #2ecc71;
+    }
+
+    .card.late {
+        border-left: 6px solid #f39c12;
+    }
+
+    /* ===== TABLE SECTION ===== */
+    .table-section {
+        background: white;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+    }
+
+
+
+    #searchInput:focus {
+        border-color: #1fa463;
+        outline: none;
+        box-shadow: 0 0 8px rgba(31,164,99,0.3);
+    }
+
+    /* TABLE */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    thead {
+        background: linear-gradient(90deg, #0f4c2f, #1fa463);
+        color: white;
+    }
+
+    th, td {
+        padding: 14px;
+        text-align: center;
+    }
+
+    tr {
+        transition: 0.2s;
+    }
+
+    tr:hover {
+        background: #f0fdf6;
+    }
+
+    /* BADGES */
+    .badge {
+        padding: 6px 14px;
+        border-radius: 50px;
+        color: white;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+    .badge.present {
+        background: linear-gradient(45deg, #28a745, #4cd964);
+    }
+
+    .badge.late {
+        background: linear-gradient(45deg, #ff9800, #ffb74d);
+    }
+
+    .badge.absent {
+        background: linear-gradient(45deg, #dc3545, #ff6b6b);
+    }
+
+    /* ===============================
+       STUDENTS PAGE ENHANCEMENT
+    =================================*/
+
+    .students-bg {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #f0fdf6, #e6f5ec);
+        padding-top: 40px;
+    }
+
+    .students-card {
+        background: white;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+        animation: fadeIn 0.6s ease-in-out;
+    }
+
+    .students-title {
+        font-size: 28px;
+        font-weight: 600;
+        margin-bottom: 30px;
+        color: #0f4c2f;
+        border-left: 6px solid #1fa463;
+        padding-left: 15px;
+    }
+
+    /* Table styling specific sa students */
+    .students-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .students-table th {
+        background: linear-gradient(90deg, #0f4c2f, #1fa463);
+        color: white;
+        padding: 15px;
+        text-transform: uppercase;
+        font-size: 13px;
+        letter-spacing: 1px;
+    }
+
+    .students-table td {
+        padding: 15px;
+        border-bottom: 1px solid #f1f1f1;
+        text-align: center;
+    }
+
+    .students-table tr {
+        transition: 0.3s ease;
+    }
+
+    .students-table tr:hover {
+        background: #f0fdf6;
+        transform: scale(1.01);
+    }
+
+    /* Total attendance badge */
+    .attendance-badge {
+        background: linear-gradient(45deg, #1fa463, #0f4c2f);
+        color: white;
+        padding: 6px 14px;
+        border-radius: 50px;
+        font-size: 13px;
+        font-weight: 600;
+        display: inline-block;
+    }
+
+    /* Smooth fade animation */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(15px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ==================================
+       MODERN GLASS STYLE - STUDENTS
+    =================================== */
+
+    .students-bg {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #0f4c2f, #1fa463);
+        padding-top: 50px;
+    }
+
+    /* Glass effect */
+    .glass {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-radius: 25px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    }
+
+    .students-title {
+        font-size: 28px;
+        font-weight: 600;
+        margin-bottom: 25px;
+        border-left: 6px solid #ffffff;
+        padding-left: 15px;
+        color: white;
+    }
+
+    /* Search bar */
+    .student-search {
+        width: 50%;
+        padding: 12px 15px;
+        margin-bottom: 20px;
+        border-radius: 12px;
+        border: none;
+        outline: none;
+        font-size: 14px;
+    }
+
+    /* Table styling */
+    .students-table {
+        width: 100%;
+        border-collapse: collapse;
+        color: white;
+    }
+
+   .students-table th {
+    padding: 15px;
+    background: rgba(255,255,255,0.2);
+    font-size: 13px;
+    letter-spacing: 1px;
+    color: white !important; /* ✅ DITO */
+}
+
+.students-table td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    color: white !important; /* ✅ DITO */
+}
+
+    .students-table tr {
+        transition: 0.3s ease;
+    }
+
+    .students-table tr:hover {
+        background: rgba(255,255,255,0.2);
+        transform: scale(1.01);
+    }
+
+    /* Attendance badge */
+    .attendance-badge {
+        background: linear-gradient(45deg, #ffffff, #d4f5e9);
+        color: #0f4c2f;
+        padding: 6px 14px;
+        border-radius: 50px;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    /* ==================================
+       REPORTS PAGE MODERN STYLE
+    =================================== */
+
+    .reports-bg {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #0f4c2f, #1fa463);
+        padding-top: 50px;
+    }
+
+    .reports-card {
+        padding: 40px;
+        border-radius: 25px;
+        color: white;
+    }
+
+    .reports-title {
+        font-size: 28px;
+        font-weight: 600;
+        margin-bottom: 30px;
+        border-left: 6px solid white;
+        padding-left: 15px;
+    }
+
+    /* Summary Cards */
+    .report-cards {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 40px;
+    }
+
+    .report-box {
+        flex: 1;
+        background: rgba(255,255,255,0.2);
+        padding: 25px;
+        border-radius: 20px;
+        text-align: center;
+        transition: 0.3s;
+    }
+
+    .report-box:hover {
+        transform: translateY(-5px);
+        background: rgba(255,255,255,0.3);
+    }
+
+    .report-box h3 {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+
+    .report-box p {
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .present-box {
+        border-left: 6px solid #2ecc71;
+    }
+
+    .late-box {
+        border-left: 6px solid #f39c12;
+    }
+
+    /* Detail Section */
+    .report-details {
+        display: flex;
+        gap: 20px;
+    }
+
+    .detail-box {
+        flex: 1;
+        background: rgba(255,255,255,0.15);
+        padding: 20px;
+        border-radius: 15px;
+    }
+
+    .detail-box h4 {
+        margin-bottom: 10px;
+        font-size: 16px;
+    }
+
+    /* ==================================
+       MODERN ADD STUDENT FORM STYLE
+    =================================== */
+
+    .add-student-form {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 15px;
+        margin-bottom: 25px;
+    }
+
+    .add-student-form input {
+        padding: 14px 16px;
+        border-radius: 14px;
+        border: 1px solid rgba(255,255,255,0.3);
+        background: rgba(255,255,255,0.2);
+        backdrop-filter: blur(10px);
+        color: white;
+        font-size: 14px;
+        transition: 0.3s ease;
+    }
+
+    .add-student-form input::placeholder {
+        color: rgba(255,255,255,0.7);
+    }
+
+    .add-student-form input:focus {
+        outline: none;
+        border: 1px solid white;
+        background: rgba(255,255,255,0.3);
+        box-shadow: 0 0 10px rgba(255,255,255,0.3);
+    }
+
+    /* Button Style */
+    .add-student-form button {
+        padding: 14px;
+        border-radius: 14px;
+        border: none;
+        background: linear-gradient(45deg, #ffffff, #d4f5e9);
+        color: #0f4c2f;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.3s ease;
+    }
+
+    .add-student-form button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    /* Dropdown styling same as input */
+    .add-student-form select {
+        padding: 14px 16px;
+        border-radius: 14px;
+        border: 1px solid rgba(255,255,255,0.3);
+        background: rgba(255,255,255,0.2);
+        backdrop-filter: blur(10px);
+        color: white;
+        font-size: 14px;
+        transition: 0.3s ease;
+        appearance: none;
+    }
+
+    .add-student-form select:focus {
+        outline: none;
+        border: 1px solid white;
+        background: rgba(255,255,255,0.3);
+        box-shadow: 0 0 10px rgba(255,255,255,0.3);
+    }
+
+    /* Fix dropdown option text color */
+    .add-student-form select option {
+        color: black;
+    }
+
+    .school-name{
+        font-family: 'Poppins', sans-serif;
+        font-size: 26px;
+        font-weight: 700;
+        text-align: center;
+        letter-spacing: 3px;
+        color: #ffffff; /* gawin nating white */
+        text-transform: uppercase;
+        line-height: 1.4;
+    }
+
+    /* mas visible na underline */
+    .school-name::after{
+        content: "";
+        display: block;
+        width: 100px;
+        height: 4px;
+        background-color: #a7f3d0; /* light green */
+        margin: 12px auto 0;
+        border-radius: 5px;
+    }
+
+    .school-name{
+        text-shadow: 0 0 8px rgba(255,255,255,0.6);
+    }
+
+    /* Inline edit fields */
+    .students-table input,
+    .students-table select {
+        padding: 6px 8px;
+        border-radius: 8px;
+        border: none;
+        font-size: 13px;
+    }
+
+    /* Buttons */
+    .edit-btn {
+        background: linear-gradient(45deg, #ffffff, #d4f5e9);
+        color: #0f4c2f;
+        border: none;
+        padding: 6px 10px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        margin-right: 5px;
+    }
+
+    .edit-btn:hover {
+        transform: translateY(-2px);
+    }
+
+    .delete-btn {
+        background: linear-gradient(45deg, #ff6b6b, #dc3545);
+        color: white;
+        padding: 6px 10px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .delete-btn:hover {
+        opacity: 0.85;
+    }
+
+    /* Edit Icon */
+    .edit-icon {
+        background: none;
+        border: none;
+        font-size: 18px;
+        cursor: pointer;
+        margin-right: 5px;
+    }
+
+    .edit-icon:hover {
+        transform: scale(1.2);
+    }
+
+    /* Save Button */
+    .save-btn {
+        background: linear-gradient(45deg, #ffffff, #d4f5e9);
+        color: #0f4c2f;
+        border: none;
+        padding: 6px 10px;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .saved-text {
+        color: #00ffae;
+        font-weight: 600;
+        margin-left: 8px;
+        font-size: 13px;
+    }
+
+    /* Spinner animation */
+    .spinner {
+        width: 14px;
+        height: 14px;
+        border: 2px solid white;
+        border-top: 2px solid #0f4c2f;
+        border-radius: 50%;
+        animation: spin 0.6s linear infinite;
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    /* ==============================
+       CENTER STUDENTS CARD
+    ============================== */
+
+    .students-bg .main-content {
+        margin-left: 280px; /* same width as sidebar */
+        display: flex;
+        justify-content: center; /* horizontal center */
+    }
+
+    .students-card {
+        width: 100%;
+        max-width: 1500px; /* limit width para hindi sobrang lapad */
+    }
+
+    /* ==============================
+       LOGIN PAGE STYLE
+    ============================== */
+
+    .login-bg {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #0f4c2f, #1fa463);
+    }
+
+    .login-card {
+        background: rgba(255,255,255,0.15);
+        backdrop-filter: blur(20px);
+        padding: 50px;
+        border-radius: 25px;
+        text-align: center;
+        width: 350px;
+        color: white;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+
+    .login-logo {
+        width: 90px;
+        margin-bottom: 20px;
+    }
+
+    .login-card input {
+        width: 100%;
+        padding: 14px;
+        margin: 10px 0;
+        border-radius: 12px;
+        border: none;
+        outline: none;
+    }
+
+    .login-card button {
+        padding: 14px;
+        border-radius: 12px;
+        border: none;
+        margin-top: 10px;
+        font-weight: 600;
+        background: linear-gradient(45deg, #ffffff, #d4f5e9);
+        color: #0f4c2f;
+        cursor: pointer;
+    }
+
+    .login-error {
+        color: #ffb3b3;
+        font-size: 14px;
+    }
+
+    .form-error {
+        background: rgba(255, 0, 0, 0.2);
+        color: #ffdddd;
+        padding: 10px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        text-align: center;
+        font-weight: 600;
+    }
+
+    /* Logout button style */
+    .logout-btn {
+        background: rgba(255,255,255,0.15);
+        color: white;
+    }
+
+    .logout-btn:hover {
+        background: #dc3545;
+        color: white;
+        transform: translateX(6px);
+    }
+
+    /* ==============================
+       LOGOUT BUTTON (BOTTOM RED)
+    ============================== */
+
+    .logout-container {
+        margin-bottom: 100px;   /* LOG OUT*/
+    }
+
+    .logout-btn {
+        display: block;
+        text-align: center;
+        padding: 12px;
+        border-radius: 10px;
+        color: white;
+        font-weight: 600;
+        text-decoration: none;
+        transition: 0.3s ease;
+    }
+
+    .logout-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        background: linear-gradient(45deg, #dc3545, #a71d2a);
+    }
+
+    .logout-btn i {
+        margin-right: 8px;
+    }
+
+    /* ==============================
+       USER INFO (SIDEBAR)
+    ============================== */
+
+    .user-info {
+        text-align: center;
+        margin-bottom: 25px;
+        padding: 10px;
+        background: rgba(255,255,255,0.15);
+        border-radius: 12px;
+        font-size: 13px;
+    }
+
+    .user-info p {
+        margin: 0;
+        opacity: 0.8;
+        font-size: 12px;
+    }
+
+    .user-info strong {
+        display: block;
+        margin-top: 4px;
+        font-size: 14px;
+    }
+
+    .menu a i,
+    .logout-btn i,
+    .user-info i {
+        margin-right: 10px;
+    }
+
+    /* ==============================
+       TOTAL STUDENTS COUNTER
+    ============================== */
+
+    .students-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .total-students-box {
+        background: rgba(255,255,255,0.2);
+        padding: 10px 18px;
+        border-radius: 12px;
+        font-weight: 600;
+        color: white;
+        backdrop-filter: blur(10px);
+    }
+
+    .total-students-box i {
+        margin-right: 8px;
+    }
+
+    /* ==============================
+       COURSE STATS
+    ============================== */
+
+    .course-stats {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 25px;
+        flex-wrap: wrap;
+    }
+
+    .course-box {
+        background: rgba(255,255,255,0.2);
+        padding: 10px 18px;
+        border-radius: 12px;
+        font-weight: 600;
+        color: white;
+        backdrop-filter: blur(10px);
+    }
+
+    .course-box i {
+        margin-right: 8px;
+    }
+
+    .absent-box {
+        border-left: 6px solid #dc3545;
+    }
+
+    .badge {
+        padding: 6px 12px;
+        border-radius: 20px;
+        color: white;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .badge.present {
+        background-color: #2ecc71;
+    }
+
+    .badge.late {
+        background-color: #f39c12;
+    }
+
+    .badge.absent {
+        background-color: #e74c3c;
+    }
+
+    .card.absent {
+        border-left: 5px solid #e74c3c;
+    }
+
+    /* Table Controls Layout */
+    .table-controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    /* Date Wrapper */
+    .date-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    /* Calendar Icon */
+    .date-wrapper i {
+        position: absolute;
+        left: 12px;
+        color: #2e7d32;
+        font-size: 16px;
+    }
+
+    /* Date Input */
+    #dateFilter {
+        padding: 8px 10px 8px 35px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        outline: none;
+        transition: 0.3s;
+    }
+
+    #dateFilter:focus {
+        border-color: #2e7d32;
+        box-shadow: 0 0 5px rgba(46,125,50,0.3);
+    }
+
+    /* Bigger Reports Cards */
+    .report-cards {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 25px;
+    }
+
+    .report-box {
+        flex: 1;
+        padding: 30px 20px;
+        border-radius: 15px;
+        background: rgba(255,255,255,0.1);
+        backdrop-filter: blur(10px);
+        text-align: center;
+    }
+
+    .report-box h3 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .report-box p {
+        font-size: 32px;
+        font-weight: bold;
+    }
+
+    .table-controls {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    .date-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: #f5f5f5;
+        padding: 8px 12px;
+        border-radius: 8px;
+    }
+
+    .date-wrapper i {
+        font-size: 18px;
+        color: #2e7d32;
+    }
+
+    #dateFilter {
+        border: none;
+        outline: none;
+        background: transparent;
+        font-size: 14px;
+    }
+
+    /* DELETE TRASH ICON */
+    .delete-btn {
+        color: #e53935;
+        font-size: 18px;
+        text-decoration: none;
+        transition: 0.2s ease;
+    }
+
+    .delete-btn:hover {
+        color: #b71c1c;
+        transform: scale(1.2);
+    }
+
+    .delete-btn {
+        background: rgba(229,57,53,0.1);
+        padding: 8px;
+        border-radius: 50%;
+    }
+
+    .start-camera-btn{
+      background:#2ecc71;
+      color:white;
+      padding:10px 15px;
+      border-radius:8px;
+      text-decoration:none;
+      margin-left:20px;
+      font-size:14px;
+    }
+
+    .start-camera-btn:hover{
+      background:#27ae60;
+    }
+
+    .camera-controls{
+      display:flex;
+      gap:10px;
+    }
+
+    .start-camera-btn{
+      background:#2ecc71;
+      color:white;
+      padding:10px 15px;
+      border-radius:8px;
+      text-decoration:none;
+    }
+
+    .stop-camera-btn{
+      background:#e74c3c;
+      color:white;
+      padding:10px 15px;
+      border-radius:8px;
+      text-decoration:none;
+
+    }
+
+    .stop-camera-btn:hover{
+      background:#c0392b;
+    }
+
+    .facial-controls{
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+    margin-bottom:15px;
+    width:100%;
+}
+    .start-camera-btn{
+        background:#2ecc71;
+        color:white;
+        padding:8px 14px;
+        border-radius:6px;
+        text-decoration:none;
+        font-size:14px;
+    }
+
+    .stop-camera-btn{
+        background:#e74c3c;
+        color:white;
+        padding:8px 14px;
+        border-radius:6px;
+        text-decoration:none;
+        font-size:14px;
+    }
+
+    .face-options{
+    margin-top:10px;
+    margin-bottom:10px;
+    }
+
+    .face-btn{
+    background:#2ecc71;
+    color:white;
+    border:none;
+    padding:8px 15px;
+    border-radius:6px;
+    cursor:pointer;
+    }
+
+    .face-menu{
+    display:none;
+    border-radius:1px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.2);
+    padding:8px;
+    margin-top:5px;
+    }
+
+    .face-menu{
+
+    width:140px;       /* laki ng box */
+    max-width:100%;    /* para responsive pa rin */
+
+    padding:15px;
+
+    border-radius:10px;
+
+    background:rgba(255,255,255,0.12);
+
+    backdrop-filter: blur(10px);
+
+    margin-top:10px;
+
+    }
+
+    .preview-grid{
+    display:flex;
+    gap:10px;
+    margin-top:10px;
+    flex-wrap:wrap;
+    }
+
+    .preview-img{
+    width:80px;
+    height:80px;
+    object-fit:cover;
+    border:3px solid transparent;
+    border-radius:8px;
+    cursor:pointer;
+    transition:all 0.2s ease;
+    }
+
+    .preview-img:hover{
+    transform:scale(1.15);
+    }
+
+    .preview-img.selected{
+    border:3px solid #2ecc71;
+    box-shadow:0 0 10px rgba(46,204,113,0.7);
+    }
+
+    .upload-box{
+
+    background: rgba(255,255,255,0.12);
+
+    backdrop-filter: blur(12px);
+
+    border-radius:12px;
+
+    padding:20px;
+
+    color:white;
+
+    width:400px;
+
+    min-height:120px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+
+    }
+
+    .upload-box input[type="file"]{
+
+    background: rgba(255,255,255,0.2);
+
+    border:none;
+
+    padding:8px;
+
+    border-radius:6px;
+
+    color:white;
+
+    margin-top:10px;
+
+    }
+
+    .upload-face-box h3{
+
+    margin-bottom:10px;
+    color:white;
+
+    }
+
+    .upload-select{
+
+    width:100%;
+    padding:8px;
+
+    border-radius:6px;
+    border:none;
+
+    margin-bottom:10px;
+
+    }
+
+    .upload-btn{
+
+    background:#2ecc71;
+    color:white;
+
+    border:none;
+
+    padding:8px 12px;
+
+    border-radius:6px;
+
+    cursor:pointer;
+
+    margin-top:10px;
+
+    }
+
+    .upload-btn:hover{
+
+    background:#27ae60;
+
+    }
+
+    .upload-message{
+
+    margin-top:10px;
+
+    font-weight:600;
+    color:#2ecc71;
+
+    }
+
+    .upload-select{
+
+    width:100%;
+    padding:10px;
+
+    border-radius:8px;
+
+    border:1px solid rgba(255,255,255,0.3);
+
+    background:rgba(255,255,255,0.1);
+
+    color:white;
+
+    font-weight:500;
+
+    outline:none;
+
+    transition:0.2s;
+
+    }
+
+    .upload-select:hover{
+
+    border:1px solid #2ecc71;
+
+    }
+
+    .upload-select:focus{
+
+    border:1px solid #2ecc71;
+
+    box-shadow:0 0 8px rgba(46,204,113,0.6);
+
+    }
+
+    .upload-select option{
+
+    color:black;
+
+    }
+
+    .upload-face-box{
+
+    background:rgba(255,255,255,0.15);
+
+    backdrop-filter:blur(10px);
+
+    border-radius:10px;
+
+    padding:20px;
+
+    color:white;
+
+    margin-top:10px;
+
+    /* hide first */
+    max-height:0;
+    overflow:hidden;
+    opacity:0;
+
+    transition:all 0.4s ease;
+
+    }
+
+    .upload-face-box.show{
+
+    max-height:400px;
+
+    opacity:1;
+
+    }
+
+
+
+    .upload-select{
+
+    background:rgba(255,255,255,0.2);
+
+    color:white;
+
+    border:none;
+
+    padding:10px;
+
+    border-radius:6px;
+
+    }
+
+    .upload-select option{
+
+    color:black;
+
+    }
+
+    .face-option-btn{
+
+    background:#2ecc71;
+
+    border:none;
+
+    color:white;
+
+    padding:10px 16px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+    margin-top:8px;
+
+    transition:0.2s;
+
+    }
+
+    .face-option-btn:hover{
+
+    background:#27ae60;
+
+    transform:scale(1.05);
+
+    }
+
+    .face-section{
+
+    display:none;
+
+    margin-top:10px;
+
+    padding:20px;
+
+    border-radius:10px;
+
+    background:rgba(255,255,255,0.15);
+
+    backdrop-filter:blur(10px);
+
+    }
+
+    .camera-btn{
+
+    background:#2ecc71;
+
+    border:none;
+
+    color:white;
+
+    padding:10px 16px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    transition:0.2s;
+
+    }
+
+    .camera-btn:hover{
+
+    background:#27ae60;
+
+    transform:scale(1.05);
+
+    }
+
+
+
+    .or-text{
+    text-align:center;
+    margin:10px 0;
+    font-weight:600;
+    color:white;
+    opacity:0.7;
+    }
+
+    .upload-toggle,
+    .selfie-toggle{
+    cursor:pointer;
+    padding:8px;
+    border-radius:8px;
+    transition:0.2s;
+    }
+
+
+    .upload-toggle:hover,
+    .selfie-toggle:hover{
+    background:rgba(255,255,255,0.15);
+    }
+
+    .badge.no{
+    background:#6c757d;
+    color:white;
+    }
+
+    /* ===== MODERN LOGIN STYLE ===== */
+
+    .login-page {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        background: #0b3d25; /* Fallback color */
+        position: relative;
+    }
+
+    /* Background na Blurred Logo */
+    .login-bg-overlay {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: url('SFICS-LOGO.PNG'); /* Siguraduhin na tama ang path */
+        background-size: 40%; /* Laki ng logo sa background */
+        background-position: center;
+        background-repeat: no-repeat;
+        filter: blur(8px) opacity(0.15); /* Blur at Transparency */
+        z-index: -1;
+    }
+
+    .login-container {
+        width: 100%;
+        max-width: 400px;
+        padding: 20px;
+    }
+
+    .login-card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+        text-align: center;
+        color: white;
+    }
+
+    .login-logo-img {
+        width: 80px;
+        margin-bottom: 15px;
+        filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
+    }
+
+    .login-header h2 {
+        margin: 0;
+        font-size: 24px;
+        letter-spacing: 1px;
+    }
+
+    .login-header p {
+        font-size: 13px;
+        opacity: 0.7;
+        margin-bottom: 30px;
+    }
+
+    /* Input Groups with Icons */
+    .input-group {
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    .input-group i {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: rgba(255,255,255,0.8);
+        font-size: 16px;
+    }
+
+    .input-group input {
+        width: 100%;
+        padding: 12px 15px 12px 45px; /* Space para sa icon */
+        background: rgba(255,255,255,0.1);
+        border: 1px solid rgba(255,255,255,0.2);
+        border-radius: 10px;
+        color: white;
+        outline: none;
+        font-size: 14px;
+        box-sizing: border-box;
+        transition: 0.3s;
+    }
+
+    .input-group input:focus {
+        background: rgba(255,255,255,0.2);
+        border-color: #2ecc71;
+        box-shadow: 0 0 10px rgba(46, 204, 113, 0.3);
+    }
+
+    /* Login Button */
+    .login-btn {
+        width: 100%;
+        padding: 12px;
+        border-radius: 10px;
+        border: none;
+        background: linear-gradient(45deg, #2ecc71, #27ae60);
+        color: white;
+        font-weight: 600;
+        font-size: 16px;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        transition: 0.3s;
+    }
+
+    .login-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
+    }
+
+    /* Error Box */
+    .login-error-box {
+        background: rgba(231, 76, 60, 0.2);
+        color: #ff9999;
+        padding: 10px;
+        border-radius: 8px;
+        font-size: 13px;
+        margin-bottom: 20px;
+        border-left: 4px solid #e74c60;
+    }
+
+    .login-footer {
+        margin-top: 30px;
+        font-size: 11px;
+        opacity: 0.5;
+    }
+
+    /* Dashboard Specific Styles */
+    .cards-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .stat-card {
+        background: white;
+        padding: 25px;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        transition: 0.3s;
+        border: 1px solid #f0f0f0;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    }
+
+    .card-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 24px;
+    }
+
+    /* Colors for Cards */
+    .total .card-icon { background: #e3f2fd; color: #2196f3; }
+    .present .card-icon { background: #e8f5e9; color: #4caf50; }
+    .late .card-icon { background: #fff3e0; color: #ff9800; }
+    .absent .card-icon { background: #ffebee; color: #f44336; }
+
+    .card-info h3 {
+        margin: 0;
+        font-size: 14px;
+        color: #888;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .card-info p {
+        margin: 5px 0 0;
+        font-size: 28px;
+        font-weight: 700;
+        color: #333;
+    }
+
+    /* Camera Bar */
+    .camera-control-bar {
+    background: #595959;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+    .btn-start,
+.btn-stop {
+    padding: 10px 20px;   /* ✅ parehong size */
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-start,
+.btn-stop {
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.2s ease;
+    display: inline-block;
+}
+
+/* START */
+.btn-start {
+    background-color: #2ecc71;
+    color: white;
+}
+
+.btn-start:hover {
+    background-color: #27ae60;
+}
+
+/* STOP */
+.btn-stop {
+    background-color: #e74c3c;
+    color: white;
+    margin-left: 10px;
+}
+
+.btn-stop:hover {
+    background-color: #c0392b;
+}
+
+.btn-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+    /* Table Panel */
+    .glass-panel {
+        background: white;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+    }
+
+    .table-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+    }
+
+    .search-box, .date-box {
+        position: relative;
+        display: inline-block;
+    }
+
+    .search-box i, .date-box i {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #aaa;
+    }
+
+    #searchInput, #dateFilter {
+        padding: 10px 15px 10px 40px;
+        border-radius: 10px;
+        border: 1px solid #eee;
+        background: #f9f9f9;
+        outline: none;
+        transition: 0.3s;
+    }
+
+    #searchInput:focus { border-color: #2ecc71; background: white; }
+
+    /* =========================================
+       PANG MALAKASAN DASHBOARD ANIMATIONS
+       ========================================= */
+
+    /* Entrance Animation para sa buong Main Content */
+    .main-content {
+        animation: contentEntrance 0.8s ease-out;
+    }
+
+    @keyframes contentEntrance {
+        0% { opacity: 0; transform: translateY(20px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 1. CARDS: Floating Entrance at Hover Effect */
+    .stat-card {
+        position: relative;
+        overflow: hidden; /* Para sa shining effect */
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+    }
+
+    /* Card Entrance Staggered Animation */
+    .stat-card:nth-child(1) { animation: cardSlideIn 0.5s ease 0.1s both; }
+    .stat-card:nth-child(2) { animation: cardSlideIn 0.5s ease 0.2s both; }
+    .stat-card:nth-child(3) { animation: cardSlideIn 0.5s ease 0.3s both; }
+    .stat-card:nth-child(4) { animation: cardSlideIn 0.5s ease 0.4s both; }
+
+    @keyframes cardSlideIn {
+        0% { opacity: 0; transform: translateX(-20px); }
+        100% { opacity: 1; transform: translateX(0); }
+    }
+
+    /* Card Hover: Lumulutang at may Glowing Shadow */
+    .stat-card:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+    }
+
+    /* Card Glowing Effect based on status */
+    .total:hover   { box-shadow: 0 15px 40px rgba(33, 150, 243, 0.2); }
+    .present:hover { box-shadow: 0 15px 40px rgba(76, 175, 80, 0.2); }
+    .late:hover    { box-shadow: 0 15px 40px rgba(255, 152, 0, 0.2); }
+    .absent:hover  { box-shadow: 0 15px 40px rgba(244, 67, 54, 0.2); }
+
+    /* Card Shining Effect (Glass Beam) */
+    .stat-card::after {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -150%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(135deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
+        transform: rotate(30deg);
+        transition: 0.6s;
+        pointer-events: none;
+    }
+
+    .stat-card:hover::after {
+        left: 100%;
+    }
+
+    /* 2. ICON ANIMATION (Pulsing) */
+    .card-icon {
+        transition: transform 0.4s ease;
+    }
+
+    .stat-card:hover .card-icon {
+        transform: scale(1.15) rotate(5deg);
+    }
+
+    /* Pulse animation para sa present indicator */
+    .present .card-icon i {
+        animation: iconPulse 2s infinite ease-in-out;
+    }
+
+    @keyframes iconPulse {
+        0%   { transform: scale(1); opacity: 1; }
+        50%  { transform: scale(1.2); opacity: 0.8; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* 3. CLOCK: Glowing Effect */
+    .digital-clock {
+        font-weight: 700;
+        color: #333;
+        animation: clockGlow 3s infinite ease-in-out;
+    }
+
+    @keyframes clockGlow {
+        0%   { text-shadow: 0 0 5px rgba(0,0,0,0.1); }
+        50%  { text-shadow: 0 0 15px rgba(46, 204, 113, 0.4); color: #2ecc71; }
+        100% { text-shadow: 0 0 5px rgba(0,0,0,0.1); }
+    }
+
+    /* 4. BUTTONS: Shining Light Effect */
+    .camera-control-bar a {
+        position: relative;
+        overflow: hidden;
+        transition: 0.3s ease;
+    }
+
+    .btn-start {
+        animation: btnEntrance 0.6s ease-out;
+    }
+
+    @keyframes btnEntrance {
+        0% { opacity: 0; transform: scale(0.8); }
+        100% { opacity: 1; transform: scale(1); }
+    }
+
+    .camera-control-bar a::after {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -100%;
+        width: 100px;
+        height: 200%;
+        background: rgba(255, 255, 255, 0.4);
+        transform: rotate(20deg);
+        transition: 0.5s ease;
+        opacity: 0;
+    }
+
+    .camera-control-bar a:hover::after {
+        left: 100%;
+        opacity: 1;
+    }
+
+    /* 5. TABLE: Smooth Entrance at Hover */
+    .table-section {
+        animation: tableEntrance 0.8s ease 0.3s both;
+    }
+
+    @keyframes tableEntrance {
+        0% { opacity: 0; transform: translateY(30px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .table-section tr {
+        transition: background-color 0.2s ease, transform 0.1s ease;
+    }
+
+    .table-section tr:hover {
+        background-color: #f8fafc;
+        transform: scale(1.01);
+    }
+
+    /* 6. BADGE: Color Pulse based on status */
+    .badge {
+        transition: 0.3s ease;
+        position: relative;
+    }
+
+    .badge.late {
+        animation: latePulse 1.5s infinite ease;
+    }
+
+    @keyframes latePulse {
+        0%   { box-shadow: 0 0 0 0 rgba(255, 152, 0, 0.6); }
+        70%  { box-shadow: 0 0 0 8px rgba(255, 152, 0, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(255, 152, 0, 0); }
+    }
+
+    /* Entrance Animation para sa buong Students Content */
+    .students-bg .main-content {
+        animation: studentsEntrance 0.8s ease-out;
+    }
+
+    @keyframes studentsEntrance {
+        0% { opacity: 0; transform: translateY(30px) scale(0.98); }
+        100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* 1. GLASS CARD: Staggered Entrance & Hover */
+    .students-card.glass {
+        position: relative;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.08); /* Semi-transparent white */
+        backdrop-filter: blur(25px);
+        border-radius: 25px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        padding: 50px 40px;
+        box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+        transition: box-shadow 0.4s ease, transform 0.4s ease;
+    }
+
+    .students-card.glass:hover {
+        box-shadow: 0 30px 80px rgba(31, 164, 99, 0.15); /* Greenish glow on hover */
+        transform: translateY(-5px);
+    }
+
+    /* 2. TITLE: Border Pulse Animation */
+    .students-title {
+        font-size: 32px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        margin-bottom: 35px;
+        border-left: 8px solid #ffffff;
+        padding-left: 20px;
+        color: white;
+        animation: titlePulse 2s infinite ease-in-out;
+    }
+
+    @keyframes titlePulse {
+        0%   { border-left-color: rgba(255,255,255,1); box-shadow: -5px 0 0 rgba(255,255,255,0.4); }
+        50%  { border-left-color: rgba(31, 164, 99, 1); box-shadow: -10px 0 20px rgba(31, 164, 99, 0.5); }
+        100% { border-left-color: rgba(255,255,255,1); box-shadow: -5px 0 0 rgba(255,255,255,0.4); }
+    }
+
+    /* 3. ADD STUDENT FORM: Glass Inputs & Button Hover */
+    .add-student-form {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 18px;
+        margin-bottom: 35px;
+        animation: formSlideIn 0.6s ease 0.2s both;
+    }
+
+    @keyframes formSlideIn {
+        0% { opacity: 0; transform: translateX(-30px); }
+        100% { opacity: 1; transform: translateX(0); }
+    }
+
+    .add-student-form input,
+    .add-student-form select {
+        padding: 16px 18px;
+        border-radius: 15px;
+        border: 1px solid rgba(255,255,255,0.2);
+        background: rgba(255,255,255,0.05);
+        backdrop-filter: blur(15px);
+        color: white;
+        font-size: 15px;
+        transition: 0.3s ease;
+    }
+
+    .add-student-form input::placeholder {
+        color: rgba(255,255,255,0.6);
+    }
+
+    .add-student-form input:focus,
+    .add-student-form select:focus {
+        outline: none;
+        border: 1px solid white;
+        background: rgba(255,255,255,0.12);
+        box-shadow: 0 0 15px rgba(255,255,255,0.25);
+    }
+
+    /* Option text color for dark selects */
+    .add-student-form select option {
+        color: black;
+    }
+
+    /* Modern Add Button */
+    .add-student-form button {
+        padding: 16px;
+        border-radius: 15px;
+        border: none;
+        background: linear-gradient(45deg, #2ecc71, #1fa463);
+        color: white;
+        font-weight: 700;
+        font-size: 16px;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .add-student-form button:hover {
+        transform: translateY(-4px) scale(1.02);
+        box-shadow: 0 10px 25px rgba(46, 204, 113, 0.4);
+        background: linear-gradient(45deg, #27ae60, #168e4a);
+    }
+
+    .add-student-form button i {
+        font-size: 18px;
+    }
+
+    /* OR-TEXT: Subtle Appearance */
+    .or-text {
+        animation: fadeIn 0.8s ease 0.4s both;
+    }
+
+    /* 4. SEARCH BAR: Minimalist & Icon Alignment */
+    .student-search {
+        width: 60%;
+        max-width: 500px;
+        padding: 14px 18px;
+        margin-bottom: 30px;
+        border-radius: 14px;
+        border: 1px solid rgba(255,255,255,0.1);
+        background: rgba(255,255,255,0.05);
+        color: white;
+        font-size: 15px;
+        outline: none;
+        transition: 0.3s ease;
+        animation: searchEntrance 0.6s ease 0.3s both;
+    }
+
+    @keyframes searchEntrance {
+        0% { opacity: 0; transform: translateY(-20px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .student-search:focus {
+        border-color: #ffffff;
+        background: rgba(255,255,255,0.12);
+        box-shadow: 0 0 15px rgba(255,255,255,0.25);
+    }
+
+    /* 5. TABLE: Glass, Staggered Rows, & Row Pulse */
+    .students-table {
+        width: 100%;
+        border-collapse: collapse;
+        color: white;
+        animation: tableEntrance 0.8s ease 0.5s both;
+    }
+
+    @keyframes tableEntrance {
+        0% { opacity: 0; transform: translateY(30px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .students-table th {
+        padding: 20px;
+        background: rgba(255,255,255,0.1);
+        font-size: 14px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .students-table td {
+        padding: 18px;
+        text-align: center;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+        transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+
+    /* Staggered Row Entrance */
+    .students-table tbody tr {
+        animation: rowSlideIn 0.5s ease both;
+    }
+
+    /* Apply staggered animation delay to first 10 rows */
+    .students-table tbody tr:nth-child(1) { animation-delay: 0.5s; }
+    .students-table tbody tr:nth-child(2) { animation-delay: 0.55s; }
+    .students-table tbody tr:nth-child(3) { animation-delay: 0.6s; }
+    .students-table tbody tr:nth-child(4) { animation-delay: 0.65s; }
+    .students-table tbody tr:nth-child(5) { animation-delay: 0.7s; }
+    /* ... and so on ... */
+
+    @keyframes rowSlideIn {
+        0% { opacity: 0; transform: translateX(20px); }
+        100% { opacity: 1; transform: translateX(0); }
+    }
+
+    /* Row Hover: Premium Focus Effect */
+    .students-table tr:hover {
+        background: rgba(255,255,255,0.15);
+        transform: scale(1.015);
+        box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    }
+
+    /* 6. TOTAL STUDENTS BADGE: Glossy Green Pulse */
+    .total-students-box {
+        background: linear-gradient(45deg, #2ecc71, #1fa463);
+        padding: 12px 22px;
+        border-radius: 14px;
+        font-weight: 700;
+        font-size: 16px;
+        color: white;
+        backdrop-filter: blur(15px);
+        box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
+        animation: badgePulse 2.5s infinite ease;
+    }
+
+    @keyframes badgePulse {
+        0%   { box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3); }
+        50%  { box-shadow: 0 10px 30px rgba(46, 204, 113, 0.6); transform: scale(1.03); }
+        100% { box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3); }
+    }
+
+    /* 7. COURSE STATS: Subtle Bounce & Icon Spin */
+    .course-stats .course-box {
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.1);
+        padding: 12px 22px;
+        border-radius: 14px;
+        transition: transform 0.3s ease, background 0.3s ease;
+    }
+
+    .course-stats .course-box:hover {
+        transform: translateY(-4px) rotate(-1deg);
+        background: rgba(255,255,255,0.1);
+    }
+
+    .course-stats .course-box i {
+        transition: transform 0.4s ease;
+    }
+
+    .course-stats .course-box:hover i {
+        transform: rotate(360deg);
+    }
+
+    /* 8. FACE OPTIONS: Glass Menu Entrance */
+    .face-menu {
+        border-radius: 15px;
+        background: rgba(255,255,255,0.08);
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(255,255,255,0.15);
+        animation: menuSlideIn 0.5s ease both;
+    }
+
+    @keyframes menuSlideIn {
+        0% { opacity: 0; transform: translateY(-10px) scale(0.9); }
+        100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* 9. ACTION BUTTONS: Premium Icons & Gradients */
+    .action-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    /* Modernized Edit Button (Pen) */
+    .edit-btn {
+        background: linear-gradient(45deg, #ffffff, #d4f5e9);
+        color: #0f4c2f;
+        border: none;
+        padding: 10px 14px;
+        border-radius: 12px;
+        cursor: pointer;
+        font-weight: 700;
+        transition: 0.3s ease;
+    }
+
+    .edit-btn:hover {
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 5px 15px rgba(255,255,255,0.3);
+    }
+
+    /* Modernized Save Button (Save) */
+    .save-btn {
+        background: linear-gradient(45deg, #2ecc71, #27ae60);
+        color: white;
+        border: none;
+        padding: 10px 14px;
+        border-radius: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.3s ease;
+    }
+
+    .save-btn:hover {
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
+    }
+
+    /* Modernized Delete Button (Trash) */
+    .delete-btn {
+        background: rgba(229, 57, 53, 0.08); /* Transparent Red */
+        border: none;
+        color: #e53935;
+        padding: 10px 14px;
+        border-radius: 12px;
+        font-size: 18px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .delete-btn:hover {
+        color: white;
+        background: linear-gradient(45deg, #ef5350, #e53935);
+        transform: translateY(-3px) scale(1.05) rotate(5deg);
+        box-shadow: 0 5px 15px rgba(229,57,53,0.3);
+    }
+
+    /* Inline edit fields styling */
+    .students-table input,
+    .students-table select {
+        padding: 8px 12px;
+        border-radius: 10px;
+        border: 1px solid rgba(255,255,255,0.15);
+        background: rgba(255,255,255,0.05);
+        color: white;
+        font-size: 14px;
+    }
+
+    /* =========================================
+       PANG MALAKASAN REPORTS (reports.html)
+       ========================================= */
+
+    /* 1. REPORT CARDS: Glass Staggered Entrance */
+    .report-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 20px;
+        margin-bottom: 40px;
+    }
+
+    .report-box {
+        background: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 25px;
+        border-radius: 20px;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        animation: reportSlideUp 0.6s ease both;
+    }
+
+    @keyframes reportSlideUp {
+        0% { opacity: 0; transform: translateY(30px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Staggered Delay */
+    .report-box:nth-child(1) { animation-delay: 0.1s; }
+    .report-box:nth-child(2) { animation-delay: 0.2s; }
+    .report-box:nth-child(3) { animation-delay: 0.3s; }
+    .report-box:nth-child(4) { animation-delay: 0.4s; }
+
+    .report-box:hover {
+        transform: scale(1.05);
+        background: rgba(255, 255, 255, 0.15);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    }
+
+    .box-content {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 15px;
+    }
+
+    .box-content i {
+        font-size: 30px;
+        opacity: 0.9;
+    }
+
+    /* 2. PROGRESS BARS: Animated Fill */
+    .progress-bar {
+        width: 100%;
+        height: 6px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .progress-bar .fill {
+        height: 100%;
+        border-radius: 10px;
+        animation: progressFill 1.5s ease-out forwards;
+        transform-origin: left;
+    }
+
+    @keyframes progressFill {
+        0% { transform: scaleX(0); }
+        100% { transform: scaleX(1); }
+    }
+
+    /* Colors for Progress Bars */
+    .total-box i { color: #3498db; }
+    .total-box .fill { background: #3498db; box-shadow: 0 0 10px #3498db; }
+
+    .present-box i { color: #2ecc71; }
+    .present-box .fill { background: #2ecc71; box-shadow: 0 0 10px #2ecc71; }
+
+    .late-box i { color: #f39c12; }
+    .late-box .fill { background: #f39c12; box-shadow: 0 0 10px #f39c12; }
+
+    .absent-box i { color: #e74c3c; }
+    .absent-box .fill { background: #e74c3c; box-shadow: 0 0 10px #e74c3c; }
+
+    /* 3. DETAILS SECTION: Glass Panels */
+    .report-details {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        margin-top: 30px;
+        animation: fadeIn 1s ease 0.6s both;
+    }
+
+    .detail-box {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 20px;
+        border-radius: 15px;
+        transition: 0.3s;
+    }
+
+    .detail-box:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .detail-box h4 {
+        color: #2ecc71;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        font-size: 14px;
+        letter-spacing: 1px;
+    }
+
+    /* 4. DATE FILTER: Glowing Focus */
+    #dateFilter {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: black;
+        border-radius: 10px;
+        outline: none;
+        transition: 0.3s;
+    }
+
+    #dateFilter:focus {
+        border-color: #2ecc71;
+        box-shadow: 0 0 15px rgba(46, 204, 113, 0.4);
+    }
+
+    /* =========================================
+       PANG MALAKASAN SETTINGS (settings.html)
+       ========================================= */
+
+    .settings-container {
+        animation: settingsEntrance 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes settingsEntrance {
+        0% { opacity: 0; transform: scale(0.95); }
+        100% { opacity: 1; transform: scale(1); }
+    }
+
+    .settings-subtitle {
+        opacity: 0.7;
+        margin-bottom: 40px;
+        font-size: 14px;
+    }
+
+    /* Settings Grid Layout */
+    .settings-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 25px;
+    }
+
+    /* =========================================
+       SETTINGS VISIBILITY FIX (High Contrast)
+       ========================================= */
+
+    /* Gawin nating mas dark yung background ng tile para lumitaw ang white text */
+    .settings-tile {
+        background: rgba(0, 0, 0, 0.4) !important; /* Darker glass */
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        padding: 25px;
+        display: flex;
+        gap: 20px;
+        transition: all 0.3s ease;
+        color: #ffffff; /* Sigurado na puti ang text */
+    }
+
+    .settings-tile:hover {
+        background: rgba(0, 0, 0, 0.6) !important;
+        border-color: #2ecc71;
+        transform: translateY(-5px);
+    }
+
+    /* Kulay ng mga Titles sa loob ng Tiles */
+    .tile-content h3 {
+        margin: 0 0 15px 0;
+        font-size: 18px;
+        color: #2ecc71 !important; /* Green para standout ang title */
+        font-weight: 700;
+    }
+
+    /* Kulay ng Labels (e.g., Version, Developer) */
+    .info-row span {
+        color: rgba(255, 255, 255, 0.7) !important;
+        font-weight: 500;
+    }
+
+    /* Kulay ng mismong values */
+    .info-row strong {
+        color: #ffffff !important;
+    }
+
+    /* Subtitle sa taas */
+    .settings-subtitle {
+        color: #ffffff !important;
+        opacity: 0.9;
+        background: rgba(0,0,0,0.2);
+        display: inline-block;
+        padding: 5px 15px;
+        border-radius: 8px;
+    }
+
+    /* Buttons Visibility */
+    .settings-btn-outline {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        color: #ffffff !important;
+        font-weight: 600;
+    }
+
+    .settings-btn-outline:hover {
+        background: #2ecc71;
+        color: #000000 !important;
+        border-color: #2ecc71;
+    }
+
+    /* Para sa System Settings Main Title */
+    .students-title {
+        color: #ffffff !important;
+        text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+    }
+    /* Tile Icon Styling */
+    .tile-icon {
+        width: 50px;
+        height: 50px;
+        background: rgba(46, 204, 113, 0.2);
+        border-radius: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 22px;
+        color: #2ecc71;
+    }
+
+    /* Content Styling inside Tile */
+    .tile-content h3 {
+        margin: 0 0 15px 0;
+        font-size: 18px;
+        color: white;
+    }
+
+    .info-row {
+        font-size: 14px;
+        margin-bottom: 8px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .info-row span { opacity: 0.6; }
+
+    .status-indicator {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 600;
+        color: #2ecc71;
+        margin-bottom: 10px;
+    }
+
+    /* Pulsing Dot for Live Status */
+    .pulse-dot {
+        width: 10px;
+        height: 10px;
+        background: #2ecc71;
+        border-radius: 50%;
+        box-shadow: 0 0 10px #2ecc71;
+        animation: statusPulse 1.5s infinite;
+    }
+
+    @keyframes statusPulse {
+        0% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.5); opacity: 0.5; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* Settings Buttons */
+    .settings-btn.mini {
+        background: #2ecc71;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 12px;
+        margin-top: 10px;
+    }
+
+    .settings-btn-outline {
+        background: transparent;
+        border: 1px solid rgba(255,255,255,0.2);
+        color: white;
+        padding: 10px;
+        border-radius: 10px;
+        width: 100%;
+        margin-bottom: 10px;
+        cursor: pointer;
+        text-align: left;
+        transition: 0.3s;
+    }
+
+    .settings-btn-outline:hover {
+        background: rgba(255,255,255,0.1);
+        border-color: #2ecc71;
+    }
+
+    .settings-footer {
+        margin-top: 50px;
+        text-align: center;
+        opacity: 0.4;
+        font-size: 12px;
+    }
+
+    /* =========================================
+       THE FINAL SETTINGS HEADER & TEXT FIX
+       ========================================= */
+
+    /* 1. HEADER TEXT (System Settings) - Gawing Dark Green para lumitaw */
+    .settings-container .students-title {
+        color: #0f4c2f !important; /* Dark SFICS Green */
+        font-size: 35px !important;
+        font-weight: 800 !important;
+        text-shadow: none !important; /* Tanggalin ang shadow na nagpapalabo */
+        border-left: 10px solid #1fa463 !important;
+        margin-bottom: 10px !important;
+    }
+
+    /* 2. SUBTITLE (Manage your SFICS...) - Gawing Dark Gray */
+    .settings-subtitle {
+        color: #333333 !important; /* Dark Gray para mabasa */
+        opacity: 1 !important;
+        font-weight: 600 !important;
+        background: transparent !important; /* Tanggalin ang background overlay */
+        padding: 0 !important;
+        margin-bottom: 40px !important;
+        display: block !important;
+    }
+
+    /* 3. TILE CONTENT - Siguraduhin na matingkad ang text sa loob ng tiles */
+    .settings-tile {
+        background: #222222 !important; /* Solid Dark para sureball */
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3) !important;
+    }
+
+    .tile-content h3 {
+        color: #2ecc71 !important; /* Neon Green para standout */
+    }
+
+    .info-row {
+        color: #ffffff !important; /* White text sa loob ng dark tile */
+    }
+
+    .info-row span {
+        color: #bbbbbb !important; /* Gray labels */
+    }
+
+    /* 4. FOOTER TEXT */
+    .settings-footer p {
+        color: #666666 !important;
+        font-weight: 600 !important;
+    }
+
+    /* =========================================
+       ADD-ON: BACKGROUND LOGO PATCH (Ligtas)
+       ========================================= */
+
+    /* 1. I-target lang natin ang container ng students page content area */
+    .students-bg .main-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    /* 2. Ilagay ang blurred logo sa likod ng content area gamit ang ::before */
+    .students-bg .main-content::before {
+        content: "";
+        position: fixed; /* Fixed para consistent ang pwesto sa screen habang nag-scroscroll */
+        top: 50%;
+        left: 60%; /* Offset para sa sidebar sa kaliwa (260px sidebar + padding) */
+        transform: translate(-50%, -50%);
+
+        /* Laki ng logo */
+        width: 1000px;
+        height: 1000px;
+
+        /* 🔴 THE LOGO IMAGE FIX 🔴 */
+        background-image: url('/static/SFICS-LOGO.PNG');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+
+        filter: blur(8px) opacity(0.12); /* Blurred at malabong opacity */
+
+        z-index: -1; /* Nasa likod lang ng students list card */
+        pointer-events: none; /* Hindi mahaharangan ang pag-click sa buttons o table */
+    }
+
+    /* =========================================
+       ADD-ON: REPORTS PAGE BACKGROUND LOGO
+       ========================================= */
+
+    /* 1. I-target ang main container ng reports page */
+    .reports-bg .main-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    /* 2. Ilagay ang blurred logo para sa reports */
+    .reports-bg .main-content::before {
+        content: "";
+        position: fixed;
+        top: 50%;
+        left: 60%; /* Consistent offset para sa sidebar */
+        transform: translate(-50%, -50%);
+
+        width: 600px;
+        height: 600px;
+
+        background-image: url('/static/SFICS-LOGO.PNG');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+
+        /* Same classy filter effect */
+        filter: blur(8px) opacity(0.12);
+
+        z-index: -1;
+        pointer-events: none;
+    }
+
+    /* =========================================
+       ADD-ON: DASHBOARD BACKGROUND LOGO
+       ========================================= */
+
+    /* 1. I-target ang dashboard area gamit ang main-content selector */
+    /* Tinitiyak nating hindi ito gagana sa ibang page sa pamamagitan ng body class check */
+    body:not(.students-bg):not(.reports-bg) .main-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    /* 2. Ilagay ang blurred logo para sa dashboard */
+    body:not(.students-bg):not(.reports-bg) .main-content::before {
+        content: "";
+        position: fixed;
+        top: 50%;
+        left: 60%; /* Consistent offset para sa sidebar */
+        transform: translate(-50%, -50%);
+
+        width: 1000px;
+        height: 1000px;
+
+        background-image: url('/static/SFICS-LOGO.PNG');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+
+        /* Same classy filter effect mula sa login */
+        filter: blur(8px) opacity(0.12);
+
+        z-index: -1;
+        pointer-events: none;
+    }
+
+    /* =========================================
+       IMAGE PREVIEW MODAL STYLES
+       ========================================= */
+    .modal-preview {
+        display: none; /* Hidden by default */
+        position: fixed;
+        z-index: 2000;
+        left: 0; top: 0;
+        width: 100%; height: 100%;
+        background-color: rgba(0, 0, 0, 0.85); /* Dark background */
+        backdrop-filter: blur(8px);
+    }
+
+    .modal-content-preview {
+        position: relative;
+        background: #1a1a1a;
+        margin: 5% auto;
+        padding: 30px;
+        width: 400px;
+        border-radius: 20px;
+        text-align: center;
+        border: 2px solid #2ecc71;
+        color: white;
+    }
+
+    #modalImage {
+        width: 100%;
+        border-radius: 15px;
+        margin: 20px 0;
+        border: 3px solid #333;
+    }
+
+    .animate-pop {
+        animation: popIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    @keyframes popIn {
+        0% { transform: scale(0.5); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+
+    .close-modal {
+        position: absolute;
+        right: 20px; top: 10px;
+        font-size: 30px;
+        cursor: pointer;
+        color: #888;
+    }
+
+    .modal-actions {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+    }
+
+    .btn-confirm {
+        background: #2ecc71; color: white; border: none;
+        padding: 12px 20px; border-radius: 10px; cursor: pointer; font-weight: 700;
+    }
+
+    .btn-cancel {
+        background: #e74c3c; color: white; border: none;
+        padding: 12px 20px; border-radius: 10px; cursor: pointer; font-weight: 700;
+    }
+
+    .custom-dropdown-container {
+        width: 320px;
+        margin-bottom: 15px;
+        position: relative;
+        z-index: 100;
+    }
+
+    /* Ang itsura ng bar bago pindutin */
+    .dropdown-trigger {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 12px 15px;
+        border-radius: 12px;
+        color: white;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: 0.3s;
+    }
+
+    .dropdown-trigger:hover {
+        background: rgba(255, 255, 255, 0.25);
+    }
+
+    /* Nakatago itong area na ito by default */
+    .dropdown-expand-area {
+        display: none; /* Hidden by default */
+        background: rgba(0, 0, 0, 0.8);
+        border-radius: 0 0 12px 12px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        overflow: hidden;
+        margin-top: 2px;
+        animation: fadeInDown 0.3s ease;
+    }
+
+    @keyframes fadeInDown {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .dropdown-search {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        outline: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Eto yung container ng listahan */
+    .custom-select {
+        width: 100%;
+        border: none;
+        background: #1a1a1a; /* Gawing dark background para lumitaw ang puting text */
+        color: white;
+        padding: 5px;
+        outline: none;
+        cursor: pointer;
+    }
+
+    /* Eto yung mismong mga pangalan sa loob */
+    .custom-select option {
+        background: #1a1a1a; /* Dark background */
+        color: white !important; /* Siguradong puti ang text */
+        padding: 12px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    /* Hover effect para alam kung nasaan ang mouse */
+    .custom-select option:hover,
+    .custom-select option:focus {
+        background-color: #1fa463 !important; /* SFICS Green pag na-hover */
+        color: white;
+    }
+    /* Arrow rotation pag bukas */
+    .dropdown-trigger.active i {
+        transform: rotate(180deg);
+    }
+
+    /* Start Capture Button Styling */
+    .btn-capture {
+        background: linear-gradient(45deg, #1fa463, #0b3d25);
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 15px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(31, 164, 99, 0.3);
+        margin: 15px 0;
+    }
+
+    .btn-capture:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(31, 164, 99, 0.5);
+        background: linear-gradient(45deg, #2ecc71, #1fa463);
+    }
+
+    .btn-capture:active {
+        transform: scale(0.95);
+    }
+
+    .btn-capture i {
+        font-size: 18px;
+    }
+
+    /* Fix para sa dropdowns sa loob ng Table (Edit Mode) */
+    .students-table select {
+        background-color: #ffffff !important; /* Puting background para sa table edit */
+        color: #333333 !important; /* Itim na text para mabasa */
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .students-table select option {
+        background-color: #ffffff !important;
+        color: #333333 !important;
+    }
+
+    /* Animation Keyframes */
+    @keyframes slideUpFade {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes pulseBorder {
+        0% { box-shadow: 0 0 0 0 rgba(31, 164, 99, 0.4); }
+        70% { box-shadow: 0 0 0 15px rgba(31, 164, 99, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(31, 164, 99, 0); }
+    }
+
+    /* I-apply sa Camera Box at Upload Box */
+    #cameraBox, #uploadFaceBox.show {
+        animation: slideUpFade 0.5s ease forwards;
+    }
+
+    /* I-apply sa Video para magmukhang active */
+    #video {
+        border: 3px solid #1fa463;
+        border-radius: 15px;
+        transition: all 0.3s ease;
+    }
+
+    .dropdown-expand-area {
+        display: none; /* Mananatiling display none sa simula */
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Kapag open ang dropdown (i-trigger natin via JS display style) */
+    .dropdown-expand-area[style*="display: block"] {
+        max-height: 400px; /* Limit ng taas */
+        opacity: 1;
+        animation: slideUpFade 0.3s ease;
+    }
+
+    .btn-capture {
+        background: linear-gradient(45deg, #1fa463, #0b3d25);
+        /* Idagdag itong line sa existing btn-capture mo */
+        animation: pulseBorder 2s infinite;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .btn-capture::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        transition: width 0.6s ease, height 0.6s ease;
+    }
+
+    .btn-capture:hover::after {
+        width: 300px;
+        height: 300px;
+    }
+
+    .students-table tr {
+        transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .students-table tr:hover {
+        background-color: rgba(31, 164, 99, 0.1) !important;
+        transform: scale(1.01);
+        cursor: default;
+    }
+
+    /* Idagdag sa style.css */
+    .error-glow {
+        border: 2px solid #ff4d4d !important;
+        box-shadow: 0 0 15px rgba(255, 77, 77, 0.6) !important;
+        animation: shake 0.4s ease-in-out;
+    }
+
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        75% { transform: translateX(5px); }
+    }
+
+    .schedule-box label {
+        background: white;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 12px;
+        cursor: pointer;
+        flex-shrink: 0; /* di mag stretch */
+    }
+
+    .schedule-box input {
+        display: none;
+    }
+
+    .schedule-box label:has(input:checked) {
+        background: #22c55e;
+        color: white;
+    }
+
+    .schedule-box {
+        display: flex;
+        align-items: center;
+        height: 45px;
+        padding: 5px 10px;
+        border-radius: 8px;
+        border: 1px solid rgba(255,255,255,0.3);
+        gap: 5px;
+        overflow-x: auto;
+        background: transparent;
+    }
+
+    .schedule-box label {
+        background: rgba(255,255,255,0.9);
+        padding: 4px 8px;
+        border-radius: 6px;
+        font-size: 12px;
+        cursor: pointer;
+        white-space: nowrap;
+    }
+
+    .schedule-box input {
+        display: none;
+    }
+
+    .schedule-box label:has(input:checked) {
+        background: #22c55e;
+        color: white;
+    }
+
+    .schedule-box::before {
+        content: "Schedule:";
+        color: white;
+        font-size: 12px;
+        margin-right: 5px;
+    }
+
+    .schedule-dropdown {
+        position: relative;
+        width: 200px;
+    }
+
+    .schedule-trigger {
+        height: 45px;
+        border-radius: 8px;
+        padding: 10px;
+        background: rgba(255,255,255,0.1);
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .schedule-menu {
+        position: absolute;
+        top: 50px;
+        left: 0;
+        width: 100%;
+        background: white;
+        border-radius: 8px;
+        display: none;
+        padding: 10px;
+        z-index: 100;
+    }
+
+    .schedule-menu label {
+        display: block;
+        padding: 5px;
+        cursor: pointer;
+    }
+
+    .schedule-menu label:hover {
+        background: #f0f0f0;
+    }
+
+    .schedule-menu {
+      display: none;
+      position: absolute;
+      background: white;
+      color: black;
+      padding: 10px;
+      border-radius: 10px;
+      z-index: 999;
+    }
+
+    .time-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .time-box input {
+      padding: 8px;
+      border-radius: 8px;
+      border: none;
+    }
+
+.report-filter {
+    margin: 15px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.report-filter input {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-family: 'Poppins', sans-serif;
+}
+
+.reports-page table td,
+.reports-page table th {
+    color: white !important;
+}
+
+.view-btn {
+    background: #27ae60;
+    border: none;
+    color: white;
+    padding: 8px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.modal-view {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content-view {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.modal-content-view img {
+    width: 250px;
+    border-radius: 10px;
+}

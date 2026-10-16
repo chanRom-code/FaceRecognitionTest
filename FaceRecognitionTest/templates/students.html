@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Students</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://docs.opencv.org/4.x/opencv.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+      /* SIDEBAR DROPDOWN STYLES */
+      .sidebar-sub-menu { display: none; list-style: none; padding-left: 15px; margin-top: 5px; margin-bottom: 10px; background: rgba(0, 0, 0, 0.1); border-radius: 8px; }
+      .sidebar-sub-menu li a { padding: 10px 15px; font-size: 0.9rem; color: #ecf0f1; display: block; border-radius: 6px; transition: 0.2s; }
+      .sidebar-sub-menu li a:hover, .sidebar-sub-menu li a.active { background: rgba(255, 255, 255, 0.2); }
+      .dropdown-icon { transition: transform 0.3s ease; }
+      .dropdown-icon.rotate { transform: rotate(180deg); }
+
+      /* TAB CONTENT STYLES */
+      .tab-content { display: none; animation: fadeIn 0.4s; }
+      .tab-content.active { display: block; }
+      @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+      /* PREMIUM GLASS FORM UI */
+      .native-form-container { background: rgba(0, 0, 0, 0.15); border: 1px solid rgba(255, 255, 255, 0.1); padding: 30px; border-radius: 15px; margin-top: 15px; color: white; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2); backdrop-filter: blur(10px); }
+      .modal-form-body { display: flex; flex-direction: column; gap: 20px; }
+      .modal-form-row { display: flex; gap: 20px; flex-wrap: wrap; }
+      .form-group { display: flex; flex-direction: column; gap: 8px; flex: 1; min-width: 220px; }
+      .form-group label { font-size: 0.85rem; font-weight: 600; color: #ecf0f1; letter-spacing: 0.5px; }
+      .form-group label i { color: #2ecc71; margin-right: 5px; }
+      .modal-form-body input[type="text"], .modal-form-body select { padding: 12px 15px; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; font-family: 'Poppins', sans-serif; outline: none; color: #fff; background-color: rgba(0,0,0,0.2); transition: all 0.3s ease; font-size: 0.95rem; }
+      .modal-form-body input[type="text"]::placeholder { color: rgba(255,255,255,0.5); }
+      .modal-form-body select option { background-color: #1e8449; color: white; }
+      .modal-form-body input[type="text"]:focus, .modal-form-body select:focus { border-color: #2ecc71; background-color: rgba(0,0,0,0.4); box-shadow: 0 0 10px rgba(46,204,113,0.3); transform: translateY(-1px); }
+      .btn-submit-native { background: linear-gradient(135deg, #27ae60, #2ecc71); color: white; border: none; padding: 15px; border-radius: 8px; font-weight: bold; cursor: pointer; text-transform: uppercase; margin-top: 15px; transition: 0.3s; width: 100%; font-family: 'Poppins', sans-serif; font-size: 1.05rem; letter-spacing: 1px; box-shadow: 0 4px 15px rgba(39,174,96,0.2); }
+      .btn-submit-native:hover { background: linear-gradient(135deg, #219150, #27ae60); transform: translateY(-3px); box-shadow: 0 6px 20px rgba(39,174,96,0.4); }
+
+      /* PREMIUM DYNAMIC SCHEDULE UI */
+      .schedule-list-container { background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 25px; margin-top: 5px; }
+      .schedule-header { font-weight: 600; color: #2ecc71; margin-bottom: 15px; display: block; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px;}
+      .day-row { display: flex; align-items: center; justify-content: space-between; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 8px; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; flex-wrap: wrap; gap: 15px; }
+      .day-row:hover { background: rgba(255,255,255,0.08); border-color: rgba(46,204,113,0.3); }
+      .day-row:last-child { margin-bottom: 0; }
+      .day-checkbox { font-weight: 500; color: white; display: flex; align-items: center; gap: 10px; width: 130px; cursor: pointer; font-size: 1rem;}
+      .day-checkbox input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; accent-color: #2ecc71;}
+      .time-inputs { display: none; align-items: center; gap: 12px; background: rgba(0,0,0,0.3); padding: 8px 20px; border-radius: 8px; flex: 1; border: 1px solid rgba(255,255,255,0.1);}
+      .time-inputs input[type="time"] { border: none; font-family: 'Poppins', sans-serif; color: #2ecc71; font-weight: 600; outline: none; background: transparent; cursor: pointer; font-size: 1.05rem;}
+      .time-inputs input[type="time"]::-webkit-calendar-picker-indicator { filter: invert(70%) sepia(50%) saturate(400%) hue-rotate(80deg) brightness(100%) contrast(100%); cursor: pointer; }
+      .time-inputs span { color: #bdc3c7; font-weight: 500; font-size: 0.9rem; }
+
+      /* FACE UI STYLES (GLASS STYLE) */
+      .face-choice-container { display: flex; gap: 15px; margin-bottom: 25px;}
+      .face-choice-btn { flex: 1; padding: 15px; background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; font-family: 'Poppins', sans-serif; font-weight: 600; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 1.1rem; backdrop-filter: blur(5px);}
+      .face-choice-btn:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px);}
+      .face-choice-btn.active { background: #2ecc71; border-color: #27ae60; box-shadow: 0 4px 15px rgba(46,204,113,0.3); }
+
+      /* MODAL OVERLAYS */
+      .form-modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
+      .form-modal-card { background: rgba(25, 42, 33, 0.95); padding: 30px; border-radius: 15px; width: 90%; max-width: 650px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2); animation: formPop 0.3s ease; position: relative; font-family: 'Poppins', sans-serif; color: white;}
+      @keyframes formPop { 0% { transform: scale(0.9); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+      .form-modal-card h2 { margin-top: 0; color: #2ecc71; font-size: 1.5rem; margin-bottom: 20px; }
+      .close-form-btn { position: absolute; top: 15px; right: 20px; cursor: pointer; font-size: 28px; color: #bdc3c7; transition: 0.2s; }
+      .close-form-btn:hover { color: #e74c3c; }
+
+      .modal-preview { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; justify-content: center; align-items: center; z-index: 1100; backdrop-filter: blur(5px); }
+      .modal-content-preview { background: rgba(25, 42, 33, 0.95); padding: 25px; border-radius: 15px; text-align: center; border: 1px solid rgba(255,255,255,0.2); color: white; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+
+      /* SWEETALERT GLOBAL FIX */
+      .swal2-popup { font-family: 'Poppins', sans-serif !important; border-radius: 15px !important; }
+    </style>
+  </head>
+
+  <body>
+    <div class="sidebar">
+      <div>
+        <div class="logo-section">
+          <img src="{{ url_for('static', filename='SFICS-LOGO.PNG') }}">
+          <h2 class="school-name">SAINT FRANCIS INSTITUTE OF COMPUTER STUDIES</h2>
+          <p>ATTENDANCE SYSTEM</p>
+        </div>
+        <div class="user-info">
+          <p><i class="fas fa-user-circle"></i> Logged in as</p>
+          <strong>{{ session.get('username', 'Admin') }}</strong>
+        </div>
+        <ul class="menu">
+          <li><a href="/"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+
+          <li>
+            <a href="#" onclick="toggleStudentsMenu(event)">
+              <i class="fas fa-users"></i> Students
+              <i class="fas fa-chevron-down dropdown-icon" id="studentsArrow" style="float: right; margin-top: 4px;"></i>
+            </a>
+            <ul class="sidebar-sub-menu" id="studentsSubMenu" style="display:block;">
+              <li><a href="#" class="tab-link active" onclick="switchTab(event, 'list')"><i class="fas fa-list"></i> Student List</a></li>
+              <li><a href="#" class="tab-link" onclick="switchTab(event, 'add')"><i class="fas fa-user-plus"></i> Add New Student</a></li>
+              <li><a href="#" class="tab-link" onclick="switchTab(event, 'face')"><i class="fas fa-camera"></i> Face Registration</a></li>
+            </ul>
+          </li>
+
+          <li><a href="/reports"><i class="fas fa-file-alt"></i> Reports</a></li>
+          <li><a href="/settings"><i class="fas fa-cog"></i> Settings</a></li>
+        </ul>
+      </div>
+      <div class="logout-container">
+        <a href="#" class="logout-btn" onclick="logoutWithFade(event)"><i class="fas fa-right-from-bracket"></i> Logout</a>
+      </div>
+    </div>
+
+    <div class="students-bg">
+      <div class="main-content">
+        <div class="students-card glass">
+
+         <div id="tab-list" class="tab-content active">
+             <div class="students-header">
+                <h1 class="students-title"><i class="fas fa-list"></i> Students List</h1>
+                <div class="total-students-box"><i class="fas fa-users"></i> Total: {{ total_students }}</div>
+             </div>
+
+             <div class="course-stats">
+                {% for course in course_counts %}
+                    <div class="course-box"><i class="fas fa-graduation-cap"></i> {{ course.course }}: {{ course.total }}</div>
+                {% endfor %}
+             </div>
+
+             {% if error %} <p class="form-error">{{ error }}</p> {% endif %}
+
+             <input type="text" id="studentSearch" placeholder="🔍 Search student name, ID, or course..." class="student-search">
+
+              <table class="students-table" id="studentsTable">
+                <tr>
+                  <th>ID</th> <th>Name</th> <th>Gender</th> <th>Address</th> <th>Course</th> <th>Year</th> <th>Total Attendance</th> <th>Actions</th>
+                </tr>
+                {% for student in students %}
+                <tr>
+                  <form method="POST" action="/edit_student/{{ student.id }}" onsubmit="confirmEditStudent(event, this)">
+                    <td>{{ student.id }}</td>
+                    <td><span class="view-mode">{{ student.name }}</span><input type="text" name="name" value="{{ student.name }}" class="edit-form" style="display:none;"></td>
+                    <td>
+                      <span class="view-mode">{{ student.gender }}</span>
+                      <select name="gender" class="edit-form" style="display:none;">
+                          <option value="Male" {% if student.gender=="Male" %}selected{% endif %}>Male</option>
+                          <option value="Female" {% if student.gender=="Female" %}selected{% endif %}>Female</option>
+                      </select>
+                    </td>
+                    <td><span class="view-mode">{{ student.address }}</span><input type="text" name="address" value="{{ student.address }}" class="edit-form" style="display:none;"></td>
+                    <td>
+                      <span class="view-mode">{{ student.course }}</span>
+                      <select name="course" class="edit-form" style="display:none;">
+                      <option value="BSIT" {% if student.course=="BSIT" %}selected{% endif %}>BSIT</option>
+                      <option value="BSBA" {% if student.course=="BSBA" %}selected{% endif %}>BSBA</option>
+                      <option value="BSHM" {% if student.course=="BSHM" %}selected{% endif %}>BSHM</option>
+                      <option value="BSTM" {% if student.course=="BSTM" %}selected{% endif %}>BSTM</option>
+                      </select>
+                    </td>
+                    <td>
+                      <span class="view-mode">{{ student.year_level }}</span>
+                      <select name="year_level" class="edit-form" style="display:none;">
+                          <option value="1st Year" {% if student.year_level=="1st Year" %}selected{% endif %}>1st Year</option>
+                          <option value="2nd Year" {% if student.year_level=="2nd Year" %}selected{% endif %}>2nd Year</option>
+                          <option value="3rd Year" {% if student.year_level=="3rd Year" %}selected{% endif %}>3rd Year</option>
+                          <option value="4th Year" {% if student.year_level=="4th Year" %}selected{% endif %}>4th Year</option>
+                          <option value="Irregular" {% if student.year_level=="Irregular" %}selected{% endif %}>Irregular</option>
+                      </select>
+                    </td>
+                    <td><span class="attendance-badge">{{ student.total_attendance }}</span></td>
+                    <td>
+                      <div class="action-buttons">
+                        <button type="button" class="edit-btn view-mode" onclick="toggleEdit(this)"><i class="fas fa-pen"></i></button>
+                        <button type="submit" class="save-btn edit-form" style="display:none;"><i class="fas fa-save"></i> Save</button>
+                        <a href="/delete_student/{{ student.id }}" class="delete-btn view-mode" onclick="confirmDelete(event, this.href)"><i class="fas fa-trash"></i></a>
+                      </div>
+                    </td>
+                  </form>
+                </tr>
+                {% endfor %}
+              </table>
+         </div>
+
+
+         <div id="tab-add" class="tab-content">
+             <div class="students-header">
+                <h1 class="students-title"><i class="fas fa-user-plus"></i> Add New Student</h1>
+             </div>
+
+             <div class="native-form-container">
+                <form method="POST" action="/add_student" class="modal-form-body" onsubmit="confirmAddStudent(event, this)">
+                    <div class="modal-form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-id-card"></i> Student ID</label>
+                            <input type="text" name="student_id" placeholder="ex. 23-1234" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-user"></i> Full Name</label>
+                            <input type="text" name="name" placeholder="Last Name, First Name" required>
+                        </div>
+                    </div>
+
+                    <div class="modal-form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-venus-mars"></i> Gender</label>
+                            <select name="gender" required>
+                              <option value="" disabled selected>Select Gender</option>
+                              <option value="Male">Male</option>
+                              <option value="Female">Female</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-book-open"></i> Course</label>
+                            <select name="course" required>
+                              <option value="" disabled selected>Select Course</option>
+                              <option value="BSIT">BSIT</option>
+                              <option value="BSBA">BSBA</option>
+                              <option value="BSHM">BSHM</option>
+                              <option value="BSTM">BSTM</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-layer-group"></i> Year Level</label>
+                            <select name="year_level" required>
+                               <option value="" disabled selected>Select Year Level</option>
+                               <option value="1st Year">1st Year</option>
+                               <option value="2nd Year">2nd Year</option>
+                               <option value="3rd Year">3rd Year</option>
+                               <option value="4th Year">4th Year</option>
+                               <option value="Irregular">Irregular</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="modal-form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-map-marker-alt"></i> Complete Address</label>
+                            <input type="text" name="address" placeholder="House No., Street, Barangay, City/Province" required>
+                        </div>
+                    </div>
+
+                    <div class="schedule-list-container">
+                      <label class="schedule-header"><i class="far fa-calendar-check"></i> Assign Weekly Schedule</label>
+                      <div class="day-row">
+                        <label class="day-checkbox"><input type="checkbox" name="schedule_days" value="Monday" onchange="toggleDayTime(this, 'Monday')"> Monday</label>
+                        <div class="time-inputs" id="time_Monday"><input type="time" name="time_start_Monday" id="start_Monday"> <span>TO</span> <input type="time" name="time_end_Monday" id="end_Monday"></div>
+                      </div>
+                      <div class="day-row">
+                        <label class="day-checkbox"><input type="checkbox" name="schedule_days" value="Tuesday" onchange="toggleDayTime(this, 'Tuesday')"> Tuesday</label>
+                        <div class="time-inputs" id="time_Tuesday"><input type="time" name="time_start_Tuesday" id="start_Tuesday"> <span>TO</span> <input type="time" name="time_end_Tuesday" id="end_Tuesday"></div>
+                      </div>
+                      <div class="day-row">
+                        <label class="day-checkbox"><input type="checkbox" name="schedule_days" value="Wednesday" onchange="toggleDayTime(this, 'Wednesday')"> Wednesday</label>
+                        <div class="time-inputs" id="time_Wednesday"><input type="time" name="time_start_Wednesday" id="start_Wednesday"> <span>TO</span> <input type="time" name="time_end_Wednesday" id="end_Wednesday"></div>
+                      </div>
+                      <div class="day-row">
+                        <label class="day-checkbox"><input type="checkbox" name="schedule_days" value="Thursday" onchange="toggleDayTime(this, 'Thursday')"> Thursday</label>
+                        <div class="time-inputs" id="time_Thursday"><input type="time" name="time_start_Thursday" id="start_Thursday"> <span>TO</span> <input type="time" name="time_end_Thursday" id="end_Thursday"></div>
+                      </div>
+                      <div class="day-row">
+                        <label class="day-checkbox"><input type="checkbox" name="schedule_days" value="Friday" onchange="toggleDayTime(this, 'Friday')"> Friday</label>
+                        <div class="time-inputs" id="time_Friday"><input type="time" name="time_start_Friday" id="start_Friday"> <span>TO</span> <input type="time" name="time_end_Friday" id="end_Friday"></div>
+                      </div>
+                    </div>
+
+                    <button type="submit" class="btn-submit-native"><i class="fas fa-user-check"></i> Register Student</button>
+                </form>
+             </div>
+         </div>
+
+
+         <div id="tab-face" class="tab-content">
+             <div class="students-header">
+                <h1 class="students-title"><i class="fas fa-camera"></i> Face Registration</h1>
+             </div>
+
+             <div class="native-form-container">
+                 <div class="face-choice-container">
+                     <button class="face-choice-btn active" id="btn-upload" onclick="switchFaceMode('upload')"><i class="fas fa-upload"></i> Upload Image</button>
+                     <button class="face-choice-btn" id="btn-camera" onclick="openCameraModal()"><i class="fas fa-camera"></i> Take Selfie</button>
+                 </div>
+
+                 <div id="uploadFaceBox" style="display:block;">
+                     <div class="custom-dropdown-container">
+                          <div class="dropdown-trigger" onclick="toggleUploadDropdown(event)" style="background: rgba(255,255,255,0.9); color:#333; border:none;">
+                              <span id="selectedUploadName">Select Student</span> <i class="fas fa-chevron-down" id="uploadArrow"></i>
+                          </div>
+                          <div id="uploadDropdownContent" class="dropdown-expand-area" style="position:absolute; width:100%; top:100%; z-index:100;">
+                              <input type="text" id="uploadSearchInput" placeholder="🔍 Search ID or Name..." class="dropdown-search">
+                              <select id="uploadStudent" size="5" class="custom-select" onchange="updateUploadSelection(this)">
+                                  <option value="" disabled selected>Choose from list</option>
+                                  {% for student in students %} <option value="{{ student.id }}">{{ student.id }} - {{ student.name }}</option> {% endfor %}
+                              </select>
+                          </div>
+                      </div>
+                      <br>
+                      <label style="font-weight:bold; color:white;"><i class="fas fa-file-image"></i> Choose Image to Upload</label><br>
+                      <input type="file" id="faceFile" accept="image/*" style="margin-top:10px; margin-bottom:15px; color: white;">
+                      <button class="btn-submit-native" onclick="fakeUpload()"><i class="fas fa-cloud-upload-alt"></i> Upload Face to Database</button>
+                 </div>
+
+             </div>
+         </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div id="cameraModalOverlay" class="form-modal-overlay">
+        <div class="form-modal-card" style="text-align: center;">
+            <span class="close-form-btn" onclick="closeCameraModal()">&times;</span>
+            <h2><i class="fas fa-camera"></i> Take a Selfie</h2>
+
+            <div class="custom-dropdown-container" id="cameraDropdownContainer" style="text-align: left; margin-bottom: 20px;">
+                <div class="dropdown-trigger" onclick="toggleDropdown()" style="background: rgba(255,255,255,0.9); color:#333; border:none;">
+                    <span id="selectedStudentName">Select Student</span> <i class="fas fa-chevron-down" id="dropdownArrow"></i>
+                </div>
+                <div id="dropdownContent" class="dropdown-expand-area" style="position:absolute; width:100%; top:100%; z-index:100;">
+                    <input type="text" id="studentSearchInput" placeholder="🔍 Search ID or Name..." class="dropdown-search">
+                    <select id="studentSelect" size="5" class="custom-select" onchange="updateSelection(this)">
+                        <option value="" disabled selected>Choose from list</option>
+                        {% for s in students %} <option value="{{ s.id }}">{{ s.id }} - {{ s.name }}</option> {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div style="position:relative; display:inline-block; border-radius: 12px; overflow: hidden; border: 4px solid #2ecc71; box-shadow: 0 5px 15px rgba(0,0,0,0.5); width: 100%; max-width: 640px; background: #000;">
+                <video id="video" width="640" height="480" style="width: 100%; height: auto; display: block;" autoplay></video>
+            </div>
+
+            <br>
+            <button onclick="startAutoCapture()" class="btn-submit-native" style="width: auto; padding: 12px 30px;"><i class="fas fa-camera-retro"></i> Start Auto Capture</button>
+            <div id="previewContainer" class="preview-grid" style="margin-top:20px; justify-content: center;"></div>
+        </div>
+    </div>
+
+    <div id="imageModal" class="modal-preview">
+        <div class="modal-content-preview animate-pop">
+            <span class="close-modal" onclick="closePreviewModal()">&times;</span>
+            <h3 style="color:#2ecc71;"><i class="fas fa-check-circle"></i> Confirm Face Capture</h3>
+            <img id="modalImage" src="" alt="Selected Face" style="border-radius: 8px; border: 3px solid white; margin-bottom: 15px; max-width: 100%;">
+            <div class="modal-actions" style="display: flex; gap: 10px; justify-content: center;">
+                <button class="btn-cancel" onclick="closePreviewModal()" style="padding: 10px 20px; border-radius: 5px; border:none; background:#e74c3c; color:white; cursor:pointer;">Retake</button>
+                <button class="btn-confirm" onclick="saveSelected()" style="padding: 10px 20px; border-radius: 5px; border:none; background:#2ecc71; color:white; font-weight:bold; cursor:pointer;">Confirm & Save</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+      // SWEETALERT CONFIRMATIONS
+      function confirmAddStudent(event, formElement) {
+          event.preventDefault();
+          Swal.fire({ title: 'Success!', text: 'Student registered successfully.', icon: 'success', confirmButtonColor: '#2ecc71', timer: 2000 }).then(() => { formElement.submit(); });
+      }
+
+      function confirmEditStudent(event, formElement) {
+          event.preventDefault();
+          Swal.fire({ title: 'Saved!', text: 'Student details updated successfully.', icon: 'success', confirmButtonColor: '#2ecc71', timer: 1500, showConfirmButton: false }).then(() => { formElement.submit(); });
+      }
+
+      function confirmDelete(event, url) {
+          event.preventDefault();
+          Swal.fire({ title: 'Are you sure?', text: "This will permanently delete the student!", icon: 'warning', showCancelButton: true, confirmButtonColor: '#e74c3c', cancelButtonColor: '#34495e', confirmButtonText: 'Yes, delete it!' }).then((result) => {
+              if (result.isConfirmed) { window.location.href = url; }
+          });
+      }
+
+      // SIDEBAR & TABS
+      function toggleStudentsMenu(event) {
+          event.preventDefault();
+          const menu = document.getElementById('studentsSubMenu');
+          const arrow = document.getElementById('studentsArrow');
+          if (menu.style.display === "block") { menu.style.display = "none"; arrow.classList.remove('rotate'); }
+          else { menu.style.display = "block"; arrow.classList.add('rotate'); }
+      }
+
+      function switchTab(event, tabName) {
+          event.preventDefault();
+          document.querySelectorAll('.tab-link').forEach(link => link.classList.remove('active'));
+          event.currentTarget.classList.add('active');
+          document.querySelectorAll('.tab-content').forEach(tab => { tab.classList.remove('active'); });
+          document.getElementById('tab-' + tabName).classList.add('active');
+
+          // Stop camera kung umalis sa Face tab
+          closeCameraModal();
+      }
+
+      // 🟢 FACE UPLOAD / CAMERA LOGIC 🟢
+      function switchFaceMode(mode) {
+          const uploadBox = document.getElementById('uploadFaceBox');
+          const btnUpload = document.getElementById('btn-upload');
+          const btnCamera = document.getElementById('btn-camera');
+
+          if (mode === 'upload') {
+              uploadBox.style.display = 'block';
+              btnUpload.classList.add('active');
+              btnCamera.classList.remove('active');
+              closeCameraModal(); // patayin ang camera kung nag-switch sa upload
+          }
+      }
+
+      function toggleDayTime(checkbox, day) {
+        const timeBox = document.getElementById('time_' + day);
+        const startInput = document.getElementById('start_' + day);
+        const endInput = document.getElementById('end_' + day);
+        if (checkbox.checked) { timeBox.style.display = 'flex'; startInput.required = true; endInput.required = true; }
+        else { timeBox.style.display = 'none'; startInput.required = false; endInput.required = false; startInput.value = ""; endInput.value = ""; }
+      }
+
+      document.getElementById("studentSearch").addEventListener("keyup", function() {
+        let input = this.value.toLowerCase();
+        let rows = document.querySelectorAll("#studentsTable tr");
+        rows.forEach((row, index) => {
+          if (index === 0) return;
+          let text = row.innerText.toLowerCase();
+          row.style.display = text.includes(input) ? "" : "none";
+        });
+      });
+
+      function toggleEdit(button) {
+        const row = button.closest("tr");
+        row.querySelectorAll(".view-mode").forEach(el => el.style.display = "none");
+        row.querySelectorAll(".edit-form").forEach(el => el.style.display = "");
+        const actionBtns = row.querySelector('.action-buttons');
+        actionBtns.querySelector('.edit-btn').style.display = "none";
+        actionBtns.querySelector('.delete-btn').style.display = "none";
+      }
+
+      let capturedImages = [];
+      let selectedImage = null;
+
+      // 🔥 BAGO: OPEN AT CLOSE CAMERA MODAL 🔥
+      function openCameraModal() {
+          document.getElementById('cameraModalOverlay').style.display = 'flex';
+          openCameraStream();
+      }
+
+      function closeCameraModal() {
+          document.getElementById('cameraModalOverlay').style.display = 'none';
+          const video = document.getElementById("video");
+          if (video && video.srcObject) {
+              video.srcObject.getTracks().forEach(track => track.stop());
+              video.srcObject = null;
+          }
+          // Reset button UI
+          document.getElementById('btn-camera').classList.remove('active');
+          document.getElementById('btn-upload').classList.add('active');
+      }
+
+      function openCameraStream() {
+          const video = document.getElementById("video");
+          navigator.mediaDevices.enumerateDevices().then(devices => {
+              const videoDevices = devices.filter(d => d.kind === "videoinput");
+              const selectedCamera = videoDevices[1] || videoDevices[0];
+              // Request higer resolution
+              return navigator.mediaDevices.getUserMedia({
+                  video: {
+                      deviceId: { exact: selectedCamera.deviceId },
+                      width: { ideal: 640 },
+                      height: { ideal: 480 }
+                  }
+              });
+          }).then(stream => { video.srcObject = stream; }).catch(() => {
+              Swal.fire('Error', 'Camera access denied or error.', 'error');
+          });
+      }
+
+      async function startAutoCapture() {
+          const studentID = document.getElementById("studentSelect").value;
+          if (!studentID) { Swal.fire('Warning', 'Please select a student first!', 'warning'); return; }
+
+          capturedImages = [];
+          document.getElementById("previewContainer").innerHTML = "";
+          let count = 0;
+          let countdownEl = document.getElementById("countdownText");
+          if(!countdownEl){
+              countdownEl = document.createElement("h2"); countdownEl.id = "countdownText";
+              countdownEl.style.cssText = "position:absolute; top:40%; left:50%; transform:translate(-50%,-50%); color:white; text-shadow:0 0 5px black; pointer-events:none; z-index:10;";
+              document.getElementById("video").parentElement.appendChild(countdownEl);
+          }
+          function runCapture() {
+              let countdown = 3;
+              const timer = setInterval(() => {
+                  countdownEl.innerText = "Capture in " + countdown; countdown--;
+                  if (countdown < 0) {
+                      clearInterval(timer); countdownEl.innerText = "Smile!"; captureFrame(); count++;
+                      if (count < 3) setTimeout(runCapture, 1000);
+                      else countdownEl.innerText = "Done";
+                  }
+              }, 1000);
+          }
+          runCapture();
+      }
+
+      function captureFrame() {
+          const video = document.getElementById("video");
+          const canvas = document.createElement("canvas");
+          canvas.width = video.videoWidth; canvas.height = video.videoHeight;
+          canvas.getContext("2d").drawImage(video, 0, 0);
+          const image = canvas.toDataURL("image/png");
+          capturedImages.push(image); showPreview(image);
+      }
+
+      function showPreview(image) {
+          const container = document.getElementById("previewContainer");
+          const img = document.createElement("img");
+          img.src = image; img.classList.add("preview-img");
+          img.onclick = function() {
+              selectedImage = image;
+              document.getElementById("modalImage").src = image;
+              document.getElementById("imageModal").style.display = "flex";
+              document.querySelectorAll(".preview-img").forEach(i => i.classList.remove("selected"));
+              img.classList.add("selected");
+          };
+          container.appendChild(img);
+      }
+
+      function closePreviewModal() { document.getElementById("imageModal").style.display = "none"; }
+
+      function saveSelected() {
+          const studentID = document.getElementById("studentSelect").value;
+          if (!studentID || !selectedImage) { Swal.fire('Warning', 'Please check student and image!', 'warning'); return; }
+
+          Swal.fire({ title: 'Saving...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
+
+          fetch("/save_face", {
+              method: "POST", headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ student_id: studentID, image: selectedImage, overwrite: window.allowOverwrite || false })
+          }).then(res => res.json()).then(data => {
+              if (data.exists) {
+                  Swal.fire({
+                      title: 'Face Exists', text: data.message + "\n\nDo you want to replace it?", icon: 'warning',
+                      showCancelButton: true, confirmButtonColor: '#2ecc71', cancelButtonColor: '#e74c3c', confirmButtonText: 'Yes, replace it!'
+                  }).then((result) => {
+                      if (result.isConfirmed) {
+                          fetch("/save_face", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ student_id: studentID, image: selectedImage, overwrite: true }) })
+                          .then(res => res.json()).then(() => { Swal.fire('Replaced!', 'Face replaced successfully!', 'success').then(()=>location.reload()); });
+                      }
+                  });
+              } else { Swal.fire('Success!', data.message, 'success').then(()=>location.reload()); }
+          });
+      }
+
+      function fakeUpload(){
+          const studentID = document.getElementById("uploadStudent").value;
+          const fileInput = document.getElementById("faceFile");
+
+          if (!studentID) { Swal.fire('Error', 'Please select a student from the dropdown.', 'error'); return; }
+          if (fileInput.files.length === 0) { Swal.fire('Error', 'Please select an image file to upload.', 'error'); return; }
+
+          fetch(`/check_existing_face/${studentID}`).then(res => res.json()).then(data => {
+              let allowOverwrite = false;
+              if (data.exists) {
+                  Swal.fire({
+                      title: 'Already Registered', text: "This student already has a registered face. Do you want to replace it?", icon: 'warning',
+                      showCancelButton: true, confirmButtonColor: '#2ecc71', cancelButtonColor: '#e74c3c', confirmButtonText: 'Yes, replace it!'
+                  }).then((result) => {
+                      if (result.isConfirmed) { processUpload(studentID, fileInput.files[0], true); }
+                  });
+              } else { processUpload(studentID, fileInput.files[0], false); }
+          });
+      }
+
+      function processUpload(studentID, file, overwrite) {
+          const formData = new FormData();
+          formData.append("student_id", studentID); formData.append("face", file); formData.append("overwrite", overwrite);
+
+          Swal.fire({ title: 'Uploading...', text: 'Please wait...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
+
+          fetch("/upload_face", { method:"POST", body:formData }).then(res=>res.json()).then(data=>{
+              Swal.fire('Success!', data.message, 'success').then(() => location.reload());
+          }).catch(()=> { Swal.fire('Error!', 'Upload Failed!', 'error'); });
+      }
+
+      window.addEventListener("click", function(event) {
+          // Close custom dropdowns
+          if (!event.target.closest('.custom-dropdown-container')) {
+              let dContent = document.getElementById('dropdownContent'); if (dContent) dContent.style.display = "none";
+              let dContent2 = document.getElementById('uploadDropdownContent'); if (dContent2) dContent2.style.display = "none";
+          }
+          // Close camera modal if clicked outside the card
+          let cameraModal = document.getElementById('cameraModalOverlay');
+          if (event.target === cameraModal) { closeCameraModal(); }
+      });
+
+      function toggleUploadDropdown(event) {
+          const content = document.getElementById('uploadDropdownContent');
+          if (content.style.display === "block") { content.style.display = "none"; } else { content.style.display = "block"; document.getElementById('uploadSearchInput').focus(); }
+      }
+
+      document.getElementById('uploadSearchInput').addEventListener('keyup', function() {
+          let filter = this.value.toLowerCase(); let options = document.getElementById('uploadStudent').options;
+          for (let i = 0; i < options.length; i++) { options[i].style.display = options[i].text.toLowerCase().includes(filter) ? "" : "none"; }
+      });
+
+      function toggleDropdown() {
+          const content = document.getElementById('dropdownContent');
+          if (content.style.display === "block") { content.style.display = "none"; } else { content.style.display = "block"; document.getElementById('studentSearchInput').focus(); }
+      }
+
+      function updateSelection(selectElement) {
+          const studentID = selectElement.value;
+          if (!studentID) return;
+          fetch(`/check_existing_face/${studentID}`).then(res => res.json()).then(data => {
+              if (data.exists) {
+                  Swal.fire({
+                      title: 'Face Already Exists', text: "Has registered face. Replace?", icon: 'warning', showCancelButton: true, confirmButtonColor: '#2ecc71', cancelButtonColor: '#e74c3c', confirmButtonText: 'Yes'
+                  }).then((result) => {
+                      if (result.isConfirmed) { window.allowOverwrite = true; document.getElementById('selectedStudentName').innerText = selectElement.options[selectElement.selectedIndex].text; toggleDropdown(); }
+                      else { window.allowOverwrite = false; selectElement.value = ""; }
+                  });
+              } else { window.allowOverwrite = false; document.getElementById('selectedStudentName').innerText = selectElement.options[selectElement.selectedIndex].text; toggleDropdown(); }
+          });
+      }
+
+      function updateUploadSelection(selectElement) {
+          const studentID = selectElement.value;
+          if (!studentID) return;
+          fetch(`/check_existing_face/${studentID}`).then(res => res.json()).then(data => {
+              if (data.exists) {
+                  Swal.fire({
+                      title: 'Face Already Exists', text: "Has registered face. Replace?", icon: 'warning', showCancelButton: true, confirmButtonColor: '#2ecc71', cancelButtonColor: '#e74c3c', confirmButtonText: 'Yes'
+                  }).then((result) => {
+                      if (result.isConfirmed) { window.allowOverwrite = true; document.getElementById('selectedUploadName').innerText = selectElement.options[selectElement.selectedIndex].text; document.getElementById('uploadDropdownContent').style.display = "none"; }
+                      else { window.allowOverwrite = false; selectElement.value = ""; }
+                  });
+              } else { window.allowOverwrite = false; document.getElementById('selectedUploadName').innerText = selectElement.options[selectElement.selectedIndex].text; document.getElementById('uploadDropdownContent').style.display = "none"; }
+          });
+      }
+    </script>
+  </body>
+</html>
